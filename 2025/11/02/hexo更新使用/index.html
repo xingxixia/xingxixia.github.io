@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>categories | 星锡丅の后宅</title>
+    <title>hexo更新使用 | 星锡丅の后宅</title>
     <meta name="author" content="星锡丅" />
     <meta name="description" content="星锡丅的笔记和攻略" />
     <meta name="keywords" content="" />
@@ -37,6 +37,10 @@
 
 
 <script src="/js/lib/preview.js"></script>
+
+
+
+
 
 
 
@@ -150,45 +154,71 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div id="archives">
-    
-    <div class="categories-tags">
-        
-        
-        
-        <span>
-            <a href="/categories/Mechanisms-and-Machine-Theoy/" style="background: #ff7d73">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Mechanisms and Machine Theoy
-            </a>
+            <div class="article">
+    <div>
+        <h1>hexo更新使用</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/11/2
         </span>
         
         
-        
-        <span>
-            <a href="/categories/Introduction-to-Robotics/" style="background: #ffa2c4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Introduction to Robotics
-            </a>
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/blog/" style="color: #03a9f4">
+                    blog
+                </a>
+            </span>
+            
         </span>
-        
-        
-        
-        <span>
-            <a href="/categories/Test/" style="background: #00bcd4">
-                <span class="icon">
-                    <i class="fa-solid fa-bookmark fa-fw"></i>
-                </span>
-                Test
-            </a>
-        </span>
-        
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>收录的个人常用的几个指令</p>
+<p>先说最常用的连招<span id="more"></span></p>
+<p><code>hexo g</code></p>
+<p><code>hexo s</code>此时可以访问<a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000/</a> 查看本地部署的网站 </p>
+<p><code>hexo d</code>上传到gethub.io</p>
+<h4 id="1、hexo-init"><a href="#1、hexo-init" class="headerlink" title="1、hexo init"></a>1、hexo init</h4><p><code>hexo init</code> 命令用于初始化本地文件夹为网站的根目录</p>
+<p><code>hexo init [folder]</code></p>
+<p>​		&#96;&#96;folder&#96; 可选，用以指定初始化目录的路径，若无指定则默认为当前目录</p>
+<h4 id="2、hexo-new"><a href="#2、hexo-new" class="headerlink" title="2、hexo new"></a>2、hexo new</h4><p><code>hexo new</code> 命令用于新建文章，一般可以简写为 <code>hexo n</code></p>
+<p><code>hexo new [layout] &lt;title&gt;</code></p>
+<p>​		<code>layout</code>可选，用以指定文章类型，若无指定则默认由配置文件中的 default_layout 选项决定</p>
+<p>​		<code>title</code> 必填参数，用以指定文章标题，如果参数值中含有空格，则需要使用双引号包围</p>
+<h4 id="3、hexo-generate"><a href="#3、hexo-generate" class="headerlink" title="3、hexo generate"></a>3、hexo generate</h4><p><code>hexo generate</code> 命令用于生成静态文件，一般可以简写为 <code>hexo g</code></p>
+<p><code>hexo generate</code></p>
+<p>​		<code>-d</code> 选项，指定生成后部署，与 <code>hexo d -g</code> 等价</p>
+<h4 id="4、hexo-server"><a href="#4、hexo-server" class="headerlink" title="4、hexo server"></a>4、hexo server</h4><p><code>hexo server</code> 命令用于启动本地服务器，一般可以简写为 <code>hexo s</code></p>
+<p><code>hexo server</code></p>
+<p>​		<code>-p</code> 选项，指定服务器端口，默认为 4000</p>
+<p>​		<code>-i</code> 选项，指定服务器 IP 地址，默认为 0.0.0.0</p>
+<p>​		<code>-s</code> 选项，静态模式 ，仅提供 public 文件夹中的文件并禁用文件监视</p>
+<p>注：运行服务器前需要安装 hexo-server</p>
+<h4 id="5、hexo-deploy"><a href="#5、hexo-deploy" class="headerlink" title="5、hexo deploy"></a>5、hexo deploy</h4><p><code>hexo deploy</code> 命令用于部署网站，一般可以简写为 <code>hexo d</code></p>
+<p><code>hexo deploy</code></p>
+<p>​		<code>-g</code> 选项，指定生成后部署，与 <code>hexo g -d</code> 等价</p>
+<h4 id="6、hexo-clean"><a href="#6、hexo-clean" class="headerlink" title="6、hexo clean"></a>6、hexo clean</h4><p><code>hexo clean</code> 命令用于清理缓存文件，是一个比较常用的命令</p>
+<p><code>hexo clean</code></p>
+
+    </div>
+    
+    
+    
+    
+    
+    
     
 </div>
 
@@ -220,6 +250,12 @@
         
     </div>
     <script src="/js/main.js"></script>
+    
+    
+
+
+
+
     
 </body>
 </html>
