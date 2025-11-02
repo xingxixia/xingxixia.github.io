@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>2.位置和姿态描述 | 星锡丅の后宅</title>
+    <title>win11-git安装与配置 | 星锡丅の后宅</title>
     <meta name="author" content="星锡丅" />
     <meta name="description" content="星锡丅的笔记和攻略" />
     <meta name="keywords" content="" />
@@ -156,14 +156,14 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>2.位置和姿态描述</h1>
+        <h1>win11-git安装与配置</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2024/9/30
+            2025/11/2
         </span>
         
         
@@ -175,8 +175,8 @@
             
             <span class="tag">
                 
-                <a href="/tags/robot/" style="color: #00bcd4">
-                    robot
+                <a href="/tags/git/" style="color: #00a596">
+                    git
                 </a>
             </span>
             
@@ -185,8 +185,35 @@
     </div>
     
     <div class="content" v-pre>
-        <p>本书省略了大量推导演算过程，强烈建议自己动手推一下，以免看的云里雾里的。遇到什么没见过或者见过但没搞清楚的知识点最好去搞清楚了再往下看，除非他说后面要解释。这本书很多知识点默认读者知道的，点名批评单位四元数，第一次看到那里直接懵逼了。</p>
-<p>这里旋转矩阵的部分强烈建议去看那个三蓝一棕的线性代数的本质视频，讲的很透彻，很形象。</p>
+        <p>主要是配置用户信息和ssh <span id="more"></span></p>
+<p>1.安装：</p>
+<p>直接去官网安装最新版<a target="_blank" rel="noopener" href="https://gitforwindows.org/">Git for Windows</a></p>
+<p>配置用户信息：</p>
+<p><code>git config --global user.name &quot;your github name&quot;</code><br><code>git config --global user.email &quot;your github email&quot;</code></p>
+<p>检查是否正确：</p>
+<p><code>git config --global user.name </code></p>
+<p><code>git config --global user.email</code></p>
+<p>用户信息就配置完成了</p>
+<p>2.现在配置ssh</p>
+<p>先确定自己是否有设置过ssh key</p>
+<p><code>cd ~/.ssh</code></p>
+<p>如果有设置过那就直接<code>cat ~/.ssh/id_rsa.pub </code></p>
+<p>没有的话执行</p>
+<p><code>ssh-keygen -t rsa -C &quot;your github email&quot;</code></p>
+<p>接下来会有三个东西可以设置，不过也可以不设置，嫌麻烦可以直接enter</p>
+<p>$ 指定目录: C:\deskbook\（说明：若在此处不输入路径，而直接按回车，则ssh keys生成后存放的路径为C:\User.ssh）</p>
+<p>$ 输入密码: 123456</p>
+<p>$ 确认密码: 123456</p>
+<p><code>cat ~/.ssh/id_rsa.pub</code>（或者cat你刚才设置的路径，总之打开id_rsa.pub这个文件）</p>
+<p>复制里面所有的东西</p>
+<p>打开github，点击头像</p>
+<p>点击设置，配置ssh，点击new ssh，随便写个名字，然后ssh key就是刚才复制的东西</p>
+<p>完事之后再回到git bush </p>
+<p>执行</p>
+<p><code>ssh -T git@github.com</code></p>
+<p>看看是否返回</p>
+<p><code>Hi &lt;username&gt;! You&#39;ve successfully authenticated, but GitHub does not provide shell access</code></p>
+<p>或者诸如此类的话，有就是成功。</p>
 
     </div>
     
