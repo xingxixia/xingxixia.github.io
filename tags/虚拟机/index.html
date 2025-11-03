@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>win11-git安装与配置 | 星锡丅の后宅</title>
+    <title>Tags: 虚拟机 | 星锡丅の后宅</title>
     <meta name="author" content="星锡丅" />
     <meta name="description" content="星锡丅的笔记和攻略" />
     <meta name="keywords" content="" />
@@ -37,10 +37,6 @@
 
 
 <script src="/js/lib/preview.js"></script>
-
-
-
-
 
 
 
@@ -154,74 +150,180 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div class="article">
-    <div>
-        <h1>win11-git安装与配置</h1>
-    </div>
-    <div class="info">
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2025/11/2
+            <div id="archives">
+    
+    <div class="categories-tags">
+        
+        
+        
+        <span>
+            <a href="/tags/hardware/" style="background: #ff7d73">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                hardware
+            </a>
         </span>
         
         
-        <span class="tags">
-            <span class="icon">
-                <i class="fa-solid fa-tags fa-fw"></i>
-            </span>
-            
-            
-            <span class="tag">
+        
+        <span>
+            <a href="/tags/robot/" style="background: #00bcd4">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                robot
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/images/" style="background: #03a9f4">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                images
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/blog/" style="background: #ff7d73">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                blog
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/git/" style="background: #03a9f4">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                git
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/ubuntu/" style="background: #ffa2c4">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                ubuntu
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/hexo/" style="background: #ff7d73">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                hexo
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/ros/" style="background: #00a596">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                ros
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/vmware/" style="background: #ffa2c4">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                vmware
+            </a>
+        </span>
+        
+        
+        
+        <span>
+            <a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                虚拟机
+            </a>
+        </span>
+        
+        
+        
+        
+        
+        <span>
+            <a href="/tags/windows11/" style="background: #ffa2c4">
+                <span class="icon">
+                    <i class="fa-solid fa-tags fa-fw"></i>
+                </span>
+                windows11
+            </a>
+        </span>
+        
+        
+    </div>
+    
+    <div class="timeline">
+        <div class="timeline-tail"></div>
+        <div class="timeline-content">
+            <div class="item-time">2025/11/3</div>
+            <a href="/2025/11/03/vmware/vmware%E9%97%AE%E9%A2%98%E5%92%8C%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">
+                <h3>vmware问题和解决办法</h3>
+            </a>
+            <div class="info">
                 
-                <a href="/tags/git/" style="color: #00a596">
-                    git
-                </a>
-            </span>
-            
-        </span>
-        
+                <span class="category">
+                    <a href="/categories/vmware/">
+                        <span class="icon">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </span>
+                        vmware
+                    </a>
+                </span>
+                
+                
+                <span class="tags">
+                    <span class="icon">
+                        <i class="fa-solid fa-tags fa-fw"></i>
+                    </span>
+                    
+                    
+                    <span class="tag">
+                        
+                        <a href="/tags/vmware/" style="color: #00a596">
+                            vmware
+                        </a>
+                    </span>
+                    
+                    <span class="tag">
+                        
+                        <a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" style="color: #ffa2c4">
+                            虚拟机
+                        </a>
+                    </span>
+                    
+                </span>
+                
+            </div>
+        </div>
     </div>
-    
-    <div class="content" v-pre>
-        <p>主要是配置用户信息和ssh <span id="more"></span></p>
-<p>1.安装：</p>
-<p>直接去官网安装最新版<a target="_blank" rel="noopener" href="https://gitforwindows.org/">Git for Windows</a></p>
-<p>配置用户信息：</p>
-<p><code>git config --global user.name &quot;your github name&quot;</code><br><code>git config --global user.email &quot;your github email&quot;</code></p>
-<p>检查是否正确：</p>
-<p><code>git config --global user.name </code></p>
-<p><code>git config --global user.email</code></p>
-<p>用户信息就配置完成了</p>
-<p>2.现在配置ssh</p>
-<p>先确定自己是否有设置过ssh key</p>
-<p><code>cd ~/.ssh</code></p>
-<p>如果有设置过那就直接<code>cat ~/.ssh/id_rsa.pub </code></p>
-<p>没有的话执行</p>
-<p><code>ssh-keygen -t rsa -C &quot;your github email&quot;</code></p>
-<p>接下来会有三个东西可以设置，不过也可以不设置，嫌麻烦可以直接enter</p>
-<p>$ 指定目录: C:\deskbook\（说明：若在此处不输入路径，而直接按回车，则ssh keys生成后存放的路径为C:\User.ssh）</p>
-<p>$ 输入密码: 123456</p>
-<p>$ 确认密码: 123456</p>
-<p><code>cat ~/.ssh/id_rsa.pub</code>（或者cat你刚才设置的路径，总之打开id_rsa.pub这个文件）</p>
-<p>复制里面所有的东西</p>
-<p>打开github，点击头像</p>
-<p>点击设置，配置ssh，点击new ssh，随便写个名字，然后ssh key就是刚才复制的东西</p>
-<p>完事之后再回到git bush </p>
-<p>执行</p>
-<p><code>ssh -T git@github.com</code></p>
-<p>看看是否返回</p>
-<p><code>Hi &lt;username&gt;! You&#39;ve successfully authenticated, but GitHub does not provide shell access</code></p>
-<p>或者诸如此类的话，有就是成功。</p>
-
-    </div>
-    
-    
-    
-    
-    
-    
     
 </div>
 
@@ -253,12 +355,6 @@
         
     </div>
     <script src="/js/main.js"></script>
-    
-    
-
-
-
-
     
 </body>
 </html>

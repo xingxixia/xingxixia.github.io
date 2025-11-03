@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>使用git创建本地仓库并托管到github | 星锡丅の后宅</title>
+    <title>星锡丅の后宅</title>
     <meta name="author" content="星锡丅" />
     <meta name="description" content="星锡丅的笔记和攻略" />
     <meta name="keywords" content="" />
@@ -42,9 +42,7 @@
 
 
 
-
-
-
+<script src="/js/lib/home.js"></script>
 
 <link rel="stylesheet" href="/css/main.css" />
 
@@ -154,68 +152,120 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div class="article">
-    <div>
-        <h1>使用git创建本地仓库并托管到github</h1>
+            <div id="home-head">
+    <div
+        id="home-background"
+        ref="homeBackground"
+        data-images="/images/background.jpg"
+    ></div>
+    <div id="home-info" @click="homeClick">
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="loop"></span>
+        <span class="info">
+            <div class="wrap">
+                <h1>星锡丅の后宅</h1>
+                <h3></h3>
+                <h5>星锡丅的笔记和攻略</h5>
+            </div>
+        </span>
     </div>
-    <div class="info">
+</div>
+<div
+    id="home-posts-wrap"
+    ref="homePostsWrap"
+    true
+>
+    <div id="home-posts">
+        
+
+<div class="post">
+    <a href="/2024/09/29/hello-world/">
+        <h2 class="post-title">Hello World</h2>
+    </a>
+    <div class="category-and-date">
+        
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2025/11/2
+            2024/9/29
         </span>
         
-        
-        <span class="tags">
-            <span class="icon">
-                <i class="fa-solid fa-tags fa-fw"></i>
-            </span>
-            
-            
-            <span class="tag">
-                
-                <a href="/tags/git/" style="color: #00a596">
-                    git
-                </a>
-            </span>
-            
-        </span>
         
     </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <p>本博客建成于2024.9.29，小小的记录一下。<br>有点小激动，毕竟是人生第一个博客。</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+        
+    </div>
+    <a href="/2024/09/29/hello-world/" class="go-post">阅读全文</a>
+</div>
+
+
+        <div class="page-current">
     
-    <div class="content" v-pre>
-        <p>使用git创建本地仓库并托管到github <span id="more"></span></p>
-<p>先总结一下：</p>
-<p>1.创建git本地仓库</p>
-<p>就是说要先有一个本地仓库（就是项目文件夹，不管怎么得到的文件夹总之有就行）</p>
-<p>然后cd也好直接open git bush here总之就是在终端页面路径是进入了这个文件夹</p>
-<p>执行<code>git init</code>之后这个文件夹就变成了git本地仓库</p>
-<p>2.与git关联</p>
-<p>配置ssh，这个不多说，可以看win11_git安装与配置那篇文章</p>
-<p>在github里创建你的项目，名字最好和刚才的项目名字一致</p>
-<p>我没有试过不一致的情况，感兴趣的可以试一试</p>
-<p>然后在git bush里执行</p>
-<p><code>git remote add origin 你的github仓库地址</code></p>
-<p>最后执行</p>
-<p><code>git add .</code>添加所有文件</p>
-<p><code>git cmmit -m &quot;消息类型&quot;</code>上传的消息类型</p>
-<p><code>git push -u origin main</code>或者是<code>git push</code>就行了</p>
-<p>3.也可以使用clone来下载一个仓库的代码，然后git bash进入其中</p>
-<p>执行<code>git init</code></p>
-<p>然后这个文件夹就是本地仓库啦，配置好ssh</p>
-<p>剩下的和上面差不多，只是在本地仓库和github仓库的创建顺序上有点差别</p>
-<p><code>git add .</code></p>
-<p><code>git cmmit -m &quot;your_message&quot;</code></p>
-<p><code>git push</code></p>
+    <a class="page-num" href="/">
+        <i class="fa-solid fa-caret-left fa-fw"></i>
+    </a>
+    <a class="page-num" href="/">1</a>
+    <span class="page-omit">...</span>
+    
+    <span class="current">2</span>
+    
+    
+    
+    
+</div>
 
     </div>
     
-    
-    
-    
-    
-    
+    <div id="home-card">
+        <div id="card-style">
+    <div id="card-div">
+        <div class="avatar">
+            <img src="/images/preview.jpg" alt="avatar" />
+        </div>
+        <div class="name">星锡丅</div>
+        <div class="description">
+            <p>一个低浓度妖梦粉</p>
+
+        </div>
+        
+        
+        <div class="friend-links">
+            
+            <div class="friend-link">
+                <a target="_blank" rel="noopener" href="https://argvchs.github.io">Argvchs</a>
+            </div>
+            
+            <div class="friend-link">
+                <a target="_blank" rel="noopener" href="https://thwiki.cc/%E9%AD%82%E9%AD%84%E5%A6%96%E6%A2%A6">THB妖梦</a>
+            </div>
+            
+            <div class="friend-link">
+                <a target="_blank" rel="noopener" href="https://zh.moegirl.org.cn/zh-hans/%E9%AD%82%E9%AD%84%E5%A6%96%E6%A2%A6">萌娘妖梦</a>
+            </div>
+            
+            <div class="friend-link">
+                <a target="_blank" rel="noopener" href="https://en.touhouwiki.net/wiki/Touhou_Wiki">Touhou Wiki</a>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+    </div>
     
 </div>
 
@@ -247,12 +297,6 @@
         
     </div>
     <script src="/js/main.js"></script>
-    
-    
-
-
-
-
     
 </body>
 </html>
