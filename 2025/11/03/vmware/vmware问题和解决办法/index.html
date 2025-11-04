@@ -184,7 +184,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/vmware/" style="color: #00bcd4">
+                <a href="/tags/vmware/" style="color: #03a9f4">
                     vmware
                 </a>
             </span>
@@ -201,10 +201,16 @@
     </div>
     
     <div class="content" v-pre>
-        <p>1.vmware安装ubuntu20.04后分辨率不能自行调节且无法启用复制粘贴和文件复制功能：</p>
+        <p>虚拟机真不行啊，创建是方便了，bug一堆，修半天<span id="more"></span></p>
+<p>1.vmware安装ubuntu20.04后分辨率不能自行调节且无法启用复制粘贴和文件复制功能：</p>
 <p>这是vmtools出问题导致的，执行sudo apt-get install open-vm-tools-desktop</p>
 <p>2.在虚拟机设置里的网络适配器中打开桥接模式后无法使用网络的问题，但是net模式是正常的：</p>
 <p>如果之前有重装过系统，那么这个可能是重装系统导致的</p>
+<p><img src="/../../images/%E8%99%9A%E6%8B%9F%E7%BD%91%E7%BB%9C%E7%BC%96%E8%BE%91%E5%99%A8%E9%A6%96%E9%A1%B5.png" alt="虚拟网络编辑器首页"></p>
+<p>上图是首页，点击下方需要管理员权限才行的&lt;更改设置&gt;</p>
+<p><img src="/../../images/DHCP%E8%AE%BE%E7%BD%AE.png" alt="DHCP设置"></p>
+<p>上图是点击后的样子，如果重装过系统或者或者卸载过vmware，可能就不会出现vmnet0（我这里已经修理过了）</p>
+<p>点击vmnet1或vmnet8，再点击移除网络，二者都移除后，点击下方的还原默认设置，按照要求来，设置完成后应该就能看到vmnet0了，此时可以用桥接模式了。</p>
 
     </div>
     
