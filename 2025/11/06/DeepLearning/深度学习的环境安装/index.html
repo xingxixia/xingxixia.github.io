@@ -1,0 +1,788 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>ubuntu安装深度学习环境 | 星锡丅の后宅</title>
+    <meta name="author" content="星锡丅" />
+    <meta name="description" content="星锡丅的笔记和攻略" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/preview.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>星锡丅の后宅</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-主页 fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;星锡丅の后宅</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-主页 fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>ubuntu安装深度学习环境</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/11/6
+        </span>
+        
+        <span class="category">
+            <a href="/categories/DeepLearning/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                DeepLearning
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/ubuntu-cuda-DeepLearning/" style="color: #00bcd4">
+                    ubuntu cuda DeepLearning
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>重点还是pytorch , tensorflow 与cuda的搭配问题<span id="more"></span></p>
+<p>资料来源</p>
+<p><a target="_blank" rel="noopener" href="https://www.tensorflow.org/install/source">Build from source  | TensorFlow</a>记得一定要按看英文版，中文的都不知道几百年没 更新过了</p>
+<p><a target="_blank" rel="noopener" href="https://pytorch.org/get-started/previous-versions/">Previous PyTorch Versions</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.nvidia.com/cudnn-archive">cuDNN Archive</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-toolkit-archive">CUDA Toolkit Archive</a></p>
+<p>这里使用多个不同版本的cuda，关于安装多个版本的cuda,可以查看<a href="">ubuntu安装多个cuda和cudnn</a>（这里到时候填网址)</p>
+<p>单个cuda也行，注意框架的版本对应</p>
+<p>废话不多讲，先放pytorh和cuda cudnn ubuntu，tensorflow和cuda cudnn ubuntu的对应关系，之后再讲安装。</p>
+<p>毕竟不同的ubuntu系统支持的cuda版本不一样。14.04&#x2F;16.04&#x2F;18.04&#x2F;18.10</p>
+<p>现在时间2025年11月16日</p>
+<h1 id="对应表格"><a href="#对应表格" class="headerlink" title="对应表格"></a>对应表格</h1><h2 id="Tensorflow"><a href="#Tensorflow" class="headerlink" title="Tensorflow"></a>Tensorflow</h2><table>
+<thead>
+<tr>
+<th align="left">Version</th>
+<th align="left">Python version</th>
+<th align="left">Compiler</th>
+<th align="left">Build tools</th>
+<th align="left">cuDNN</th>
+<th align="left">CUDA</th>
+<th>ubuntu</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">tensorflow-2.20.0</td>
+<td align="left">3.9-3.13</td>
+<td align="left">Clang 18.1.8</td>
+<td align="left">Bazel 7.4.1</td>
+<td align="left">9.3</td>
+<td align="left">12.5</td>
+<td>20.04&#x2F;22.04&#x2F;24.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.19.0</td>
+<td align="left">3.9-3.12</td>
+<td align="left">Clang 18.1.8</td>
+<td align="left">Bazel 6.5.0</td>
+<td align="left">9.3</td>
+<td align="left">12.5</td>
+<td>20.04&#x2F;22.04&#x2F;24.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.18.0</td>
+<td align="left">3.9-3.12</td>
+<td align="left">Clang 17.0.6</td>
+<td align="left">Bazel 6.5.0</td>
+<td align="left">9.3</td>
+<td align="left">12.5</td>
+<td>20.04&#x2F;22.04&#x2F;24.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.17.0</td>
+<td align="left">3.9-3.12</td>
+<td align="left">Clang 17.0.6</td>
+<td align="left">Bazel 6.5.0</td>
+<td align="left">8.9</td>
+<td align="left">12.3</td>
+<td>20.04&#x2F;22.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.16.1</td>
+<td align="left">3.9-3.12</td>
+<td align="left">Clang 17.0.6</td>
+<td align="left">Bazel 6.5.0</td>
+<td align="left">8.9</td>
+<td align="left">12.3</td>
+<td>20.04&#x2F;22.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.15.0</td>
+<td align="left">3.9-3.11</td>
+<td align="left">Clang 16.0.0</td>
+<td align="left">Bazel 6.1.0</td>
+<td align="left">8.9</td>
+<td align="left">12.2</td>
+<td>20.04&#x2F;22.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.14.0</td>
+<td align="left">3.9-3.11</td>
+<td align="left">Clang 16.0.0</td>
+<td align="left">Bazel 6.1.0</td>
+<td align="left">8.7</td>
+<td align="left">11.8</td>
+<td>18.04&#x2F;20.04&#x2F;22.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.13.0</td>
+<td align="left">3.8-3.11</td>
+<td align="left">Clang 16.0.0</td>
+<td align="left">Bazel 5.3.0</td>
+<td align="left">8.6</td>
+<td align="left">11.8</td>
+<td>18.04&#x2F;20.04&#x2F;22.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.12.0</td>
+<td align="left">3.8-3.11</td>
+<td align="left">GCC 9.3.1</td>
+<td align="left">Bazel 5.3.0</td>
+<td align="left">8.6</td>
+<td align="left">11.8</td>
+<td>18.04&#x2F;20.04&#x2F;22.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.11.0</td>
+<td align="left">3.7-3.10</td>
+<td align="left">GCC 9.3.1</td>
+<td align="left">Bazel 5.3.0</td>
+<td align="left">8.1</td>
+<td align="left">11.2</td>
+<td>16.04&#x2F;18.04&#x2F;20.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.10.0</td>
+<td align="left">3.7-3.10</td>
+<td align="left">GCC 9.3.1</td>
+<td align="left">Bazel 5.1.1</td>
+<td align="left">8.1</td>
+<td align="left">11.2</td>
+<td>16.04&#x2F;18.04&#x2F;20.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.9.0</td>
+<td align="left">3.7-3.10</td>
+<td align="left">GCC 9.3.1</td>
+<td align="left">Bazel 5.0.0</td>
+<td align="left">8.1</td>
+<td align="left">11.2</td>
+<td>16.04&#x2F;18.04&#x2F;20.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.8.0</td>
+<td align="left">3.7-3.10</td>
+<td align="left">GCC 7.3.1</td>
+<td align="left">Bazel 4.2.1</td>
+<td align="left">8.1</td>
+<td align="left">11.2</td>
+<td>16.04&#x2F;18.04&#x2F;20.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.7.0</td>
+<td align="left">3.7-3.9</td>
+<td align="left">GCC 7.3.1</td>
+<td align="left">Bazel 3.7.2</td>
+<td align="left">8.1</td>
+<td align="left">11.2</td>
+<td>16.04&#x2F;18.04&#x2F;20.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.6.0</td>
+<td align="left">3.6-3.9</td>
+<td align="left">GCC 7.3.1</td>
+<td align="left">Bazel 3.7.2</td>
+<td align="left">8.1</td>
+<td align="left">11.2</td>
+<td>16.04&#x2F;18.04&#x2F;20.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.5.0</td>
+<td align="left">3.6-3.9</td>
+<td align="left">GCC 7.3.1</td>
+<td align="left">Bazel 3.7.2</td>
+<td align="left">8.1</td>
+<td align="left">11.2</td>
+<td>16.04&#x2F;18.04&#x2F;20.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.4.0</td>
+<td align="left">3.6-3.8</td>
+<td align="left">GCC 7.3.1</td>
+<td align="left">Bazel 3.1.0</td>
+<td align="left">8.0</td>
+<td align="left">11.0</td>
+<td>16.04&#x2F;18.04&#x2F;20.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.3.0</td>
+<td align="left">3.5-3.8</td>
+<td align="left">GCC 7.3.1</td>
+<td align="left">Bazel 3.1.0</td>
+<td align="left">7.6</td>
+<td align="left">10.1</td>
+<td>14.0416.04&#x2F;18.04&#x2F;18.10</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.2.0</td>
+<td align="left">3.5-3.8</td>
+<td align="left">GCC 7.3.1</td>
+<td align="left">Bazel 2.0.0</td>
+<td align="left">7.6</td>
+<td align="left">10.1</td>
+<td>14.0416.04&#x2F;18.04&#x2F;18.10</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.1.0</td>
+<td align="left">2.7, 3.5-3.7</td>
+<td align="left">GCC 7.3.1</td>
+<td align="left">Bazel 0.27.1</td>
+<td align="left">7.6</td>
+<td align="left">10.1</td>
+<td>14.0416.04&#x2F;18.04&#x2F;18.10</td>
+</tr>
+<tr>
+<td align="left">tensorflow-2.0.0</td>
+<td align="left">2.7, 3.3-3.7</td>
+<td align="left">GCC 7.3.1</td>
+<td align="left">Bazel 0.26.1</td>
+<td align="left">7.4</td>
+<td align="left">10.0</td>
+<td>14.0416.04&#x2F;18.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow_gpu-1.15.0</td>
+<td align="left">2.7, 3.3-3.7</td>
+<td align="left">GCC 7.3.1</td>
+<td align="left">Bazel 0.26.1</td>
+<td align="left">7.4</td>
+<td align="left">10.0</td>
+<td>14.0416.04&#x2F;18.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow_gpu-1.14.0</td>
+<td align="left">2.7, 3.3-3.7</td>
+<td align="left">GCC 4.8</td>
+<td align="left">Bazel 0.24.1</td>
+<td align="left">7.4</td>
+<td align="left">10.0</td>
+<td>14.0416.04&#x2F;18.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow_gpu-1.13.1</td>
+<td align="left">2.7, 3.3-3.7</td>
+<td align="left">GCC 4.8</td>
+<td align="left">Bazel 0.19.2</td>
+<td align="left">7.4</td>
+<td align="left">10.0</td>
+<td>14.0416.04&#x2F;18.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow_gpu-1.12.0</td>
+<td align="left">2.7, 3.3-3.6</td>
+<td align="left">GCC 4.8</td>
+<td align="left">Bazel 0.15.0</td>
+<td align="left">7</td>
+<td align="left">9</td>
+<td>16.04&#x2F;17.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow_gpu-1.11.0</td>
+<td align="left">2.7, 3.3-3.6</td>
+<td align="left">GCC 4.8</td>
+<td align="left">Bazel 0.15.0</td>
+<td align="left">7</td>
+<td align="left">9</td>
+<td>16.04&#x2F;17.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow_gpu-1.10.0</td>
+<td align="left">2.7, 3.3-3.6</td>
+<td align="left">GCC 4.8</td>
+<td align="left">Bazel 0.15.0</td>
+<td align="left">7</td>
+<td align="left">9</td>
+<td>16.04&#x2F;17.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow_gpu-1.9.0</td>
+<td align="left">2.7, 3.3-3.6</td>
+<td align="left">GCC 4.8</td>
+<td align="left">Bazel 0.11.0</td>
+<td align="left">7</td>
+<td align="left">9</td>
+<td>16.04&#x2F;17.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow_gpu-1.8.0</td>
+<td align="left">2.7, 3.3-3.6</td>
+<td align="left">GCC 4.8</td>
+<td align="left">Bazel 0.10.0</td>
+<td align="left">7</td>
+<td align="left">9</td>
+<td>16.04&#x2F;17.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow_gpu-1.7.0</td>
+<td align="left">2.7, 3.3-3.6</td>
+<td align="left">GCC 4.8</td>
+<td align="left">Bazel 0.9.0</td>
+<td align="left">7</td>
+<td align="left">9</td>
+<td>16.04&#x2F;17.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow_gpu-1.6.0</td>
+<td align="left">2.7, 3.3-3.6</td>
+<td align="left">GCC 4.8</td>
+<td align="left">Bazel 0.9.0</td>
+<td align="left">7</td>
+<td align="left">9</td>
+<td>16.04&#x2F;17.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow_gpu-1.5.0</td>
+<td align="left">2.7, 3.3-3.6</td>
+<td align="left">GCC 4.8</td>
+<td align="left">Bazel 0.8.0</td>
+<td align="left">7</td>
+<td align="left">9</td>
+<td>16.04&#x2F;17.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow_gpu-1.4.0</td>
+<td align="left">2.7, 3.3-3.6</td>
+<td align="left">GCC 4.8</td>
+<td align="left">Bazel 0.5.4</td>
+<td align="left">6</td>
+<td align="left">8</td>
+<td>14.04&#x2F;16.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow_gpu-1.3.0</td>
+<td align="left">2.7, 3.3-3.6</td>
+<td align="left">GCC 4.8</td>
+<td align="left">Bazel 0.4.5</td>
+<td align="left">6</td>
+<td align="left">8</td>
+<td>14.04&#x2F;16.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow_gpu-1.2.0</td>
+<td align="left">2.7, 3.3-3.6</td>
+<td align="left">GCC 4.8</td>
+<td align="left">Bazel 0.4.5</td>
+<td align="left">5.1</td>
+<td align="left">8</td>
+<td>14.04&#x2F;16.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow_gpu-1.1.0</td>
+<td align="left">2.7, 3.3-3.6</td>
+<td align="left">GCC 4.8</td>
+<td align="left">Bazel 0.4.2</td>
+<td align="left">5.1</td>
+<td align="left">8</td>
+<td>14.04&#x2F;16.04</td>
+</tr>
+<tr>
+<td align="left">tensorflow_gpu-1.0.0</td>
+<td align="left">2.7, 3.3-3.6</td>
+<td align="left">GCC 4.8</td>
+<td align="left">Bazel 0.4.2</td>
+<td align="left">5.1</td>
+<td align="left">8</td>
+<td>14.04&#x2F;16.04</td>
+</tr>
+</tbody></table>
+<h2 id="Pytorch"><a href="#Pytorch" class="headerlink" title="Pytorch"></a>Pytorch</h2><table>
+<thead>
+<tr>
+<th align="left">Version</th>
+<th align="left">Python version</th>
+<th align="left">CUDA</th>
+<th>ubuntu</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Pytorch2.9.0</td>
+<td align="left"></td>
+<td align="left">12.6&#x2F;12.8&#x2F;13.0</td>
+<td>20.4&#x2F;22.04&#x2F;24.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch2.8.0</td>
+<td align="left"></td>
+<td align="left">12.6&#x2F;12.8&#x2F;12.9</td>
+<td>20.4&#x2F;22.04&#x2F;24.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch2.7.1&#x2F;Pytorch2.7.0</td>
+<td align="left"></td>
+<td align="left">11.8&#x2F;12.6&#x2F;12.8</td>
+<td>18.04&#x2F;20.04&#x2F;22.04&#x2F;24.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch2.6.0</td>
+<td align="left"></td>
+<td align="left">11.8&#x2F;12.4&#x2F;12.6</td>
+<td>18.04&#x2F;20.04&#x2F;22.04&#x2F;24.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch2.5.1&#x2F;Pytorch2.5.0</td>
+<td align="left"></td>
+<td align="left">11.8&#x2F;12.1&#x2F;12.4</td>
+<td>18.04&#x2F;20.04&#x2F;22.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch2.4.1&#x2F;Pytorch2.4.0</td>
+<td align="left"></td>
+<td align="left">11.8&#x2F;12.1&#x2F;12.4</td>
+<td>18.04&#x2F;20.04&#x2F;22.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch2.3.1&#x2F;Pytorch2.3.0</td>
+<td align="left"></td>
+<td align="left">11.8&#x2F;12.1</td>
+<td>18.04&#x2F;20.04&#x2F;22.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch2.2.2&#x2F;Pytorch2.2.1&#x2F;Pytorch2.2.0</td>
+<td align="left"></td>
+<td align="left">11.8&#x2F;12.1</td>
+<td>18.04&#x2F;20.04&#x2F;22.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch2.1.2&#x2F;Pytorch2.1.1&#x2F;Pytorch2.1.0</td>
+<td align="left"></td>
+<td align="left">11.8&#x2F;12.1</td>
+<td>18.04&#x2F;20.04&#x2F;22.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch2.0.1&#x2F;Pytorch2.0.0</td>
+<td align="left"></td>
+<td align="left">11.7&#x2F;11.8</td>
+<td>18.04&#x2F;20.04&#x2F;22.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch1.13.1&#x2F;Pytorch1.13.0</td>
+<td align="left"></td>
+<td align="left">11.6&#x2F;11.7</td>
+<td>18.04&#x2F;20.04&#x2F;22.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch1.12.1&#x2F;Pytorch1.12.0</td>
+<td align="left"></td>
+<td align="left">10.2&#x2F;11.3&#x2F;11.6</td>
+<td>16.04&#x2F;18.04&#x2F;20.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch1.10.0</td>
+<td align="left"></td>
+<td align="left">10.2&#x2F;11.3</td>
+<td>16.04&#x2F;18.04&#x2F;20.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch1.10.1&#x2F;Pytorch1.10.0</td>
+<td align="left"></td>
+<td align="left">10.2&#x2F;11.1&#x2F;11.3</td>
+<td>16.04&#x2F;18.04&#x2F;20.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch1.9.1&#x2F;Pytorch1.9.0</td>
+<td align="left"></td>
+<td align="left">10.2&#x2F;11.1&#x2F;11.3</td>
+<td>16.04&#x2F;18.04&#x2F;20.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch1.8.2&#x2F;Pytorch1.8.0</td>
+<td align="left"></td>
+<td align="left">10.2&#x2F;11.1</td>
+<td>16.04&#x2F;18.04&#x2F;20.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch1.8.1</td>
+<td align="left"></td>
+<td align="left">10.1&#x2F;10.2&#x2F;11.1&#x2F;11.3</td>
+<td>14.04&#x2F;16.04&#x2F;18.04&#x2F;20.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch1.7.1&#x2F;Pytorch1.7.0</td>
+<td align="left"></td>
+<td align="left">9.2&#x2F;10.1&#x2F;10.2&#x2F;11.0</td>
+<td>14.04&#x2F;16.04&#x2F;17.04&#x2F;18.04&#x2F;20.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch1.6.0</td>
+<td align="left"></td>
+<td align="left">9.2&#x2F;10.1&#x2F;10.2</td>
+<td>14.04&#x2F;16.04&#x2F;17.04&#x2F;18.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch1.5.1&#x2F;Pytorch1.5.0</td>
+<td align="left"></td>
+<td align="left">9.2&#x2F;10.1&#x2F;10.2</td>
+<td>14.04&#x2F;16.04&#x2F;17.04&#x2F;18.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch1.4.0</td>
+<td align="left"></td>
+<td align="left">9.2&#x2F;10.1</td>
+<td>14.04&#x2F;16.04&#x2F;17.04&#x2F;18.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch1.2.0</td>
+<td align="left"></td>
+<td align="left">9.2&#x2F;10.0</td>
+<td>14.04&#x2F;16.04&#x2F;17.04&#x2F;18.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch1.1.0</td>
+<td align="left"></td>
+<td align="left">9.0&#x2F;10.0</td>
+<td>14.04&#x2F;16.04&#x2F;17.04&#x2F;18.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch1.0.1</td>
+<td align="left"></td>
+<td align="left">9.0&#x2F;10.0</td>
+<td>14.04&#x2F;16.04&#x2F;17.04&#x2F;18.04</td>
+</tr>
+<tr>
+<td align="left">Pytorch1.0.0</td>
+<td align="left"></td>
+<td align="left">8.0&#x2F;9.0&#x2F;10.0</td>
+<td>14.04&#x2F;16.04&#x2F;17.04&#x2F;18.04</td>
+</tr>
+</tbody></table>
+<p>注意：Latest Stable PyTorch requires Python 3.9 or later. Latest Preview (Nightly) PyTorch requires Python 3.10 or later.</p>
+<h1 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h1><h2 id="1-ubuntu24-04安装miniconda"><a href="#1-ubuntu24-04安装miniconda" class="headerlink" title="1.ubuntu24.04安装miniconda"></a>1.ubuntu24.04安装miniconda</h2><p>进入miniconda官网，点击左边的install。</p>
+<p>![cuda13.0官网1](....\images\miniconda install.png)</p>
+<p>复制进终端</p>
+<pre><code>wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+sh Miniconda3-latest-Linux-x86_64.sh
+</code></pre>
+<p>或者也可以下载历史版本，<a target="_blank" rel="noopener" href="https://repo.anaconda.com/miniconda/">Miniconda archive</a>。</p>
+<h2 id="2-ubuntu24-04安装pycharm"><a href="#2-ubuntu24-04安装pycharm" class="headerlink" title="2.ubuntu24.04安装pycharm"></a>2.ubuntu24.04安装pycharm</h2><p>直接搜索pycharm linux install，然后去官网下载</p>
+<p>下载下来是个压缩包，使用<code>tar -xvf </code>或图形化解压，并把它放在想安装的位置</p>
+<p>进入文件夹，再进入bin文件夹，运行pycharm文件就能进入软件了，但是现在还不够，</p>
+<p>再点击工具(tools)，然后选择创建桌面文件（忘了叫什么名字了），安装完毕</p>
+<h2 id="3-ubuntu24-04安装pytorch2-9-1"><a href="#3-ubuntu24-04安装pytorch2-9-1" class="headerlink" title="3.ubuntu24.04安装pytorch2.9.1"></a>3.ubuntu24.04安装pytorch2.9.1</h2><p>先使用miniconda创建虚拟环境，比如</p>
+<p><code>conda create -n Pytorch_test </code></p>
+<p>然后<code>conda activate Pytorch_test</code></p>
+<p>检查一下cuda是否安装，nvcc -V，这里假设安装的是cuda13.0，注意预览版本的pytorch需要python10或者更高，不然会报错</p>
+<p>如果是稳定版，需要python3.9或更高</p>
+<p>那么执行</p>
+<p><code>pip3 install torch torchvision --index-url https://download.pytorch.org/whl/cu130</code></p>
+<p>或者也可以使用其他版本<a target="_blank" rel="noopener" href="https://pytorch.org/get-started/previous-versions">previous versions of PyTorch</a>，注意版本对应</p>
+<h2 id="4-ubuntu24-04安装tensorflow2-18-0"><a href="#4-ubuntu24-04安装tensorflow2-18-0" class="headerlink" title="4.ubuntu24.04安装tensorflow2.18.0"></a>4.ubuntu24.04安装tensorflow2.18.0</h2><p>先使用miniconda创建虚拟环境，比如</p>
+<p><code>conda create -n Tensorflow_test </code></p>
+<p>然后<code>conda activate Tensorflow_test</code></p>
+<p>检查一下cuda是否安装，nvcc -V，这里假设安装的是cuda12.5，python 是11</p>
+<p>执行 <code>pip install tensorflow[and-cuda]==2.18.0</code></p>
+<p>需要注意的是tensorflow从挺早的版本对windows就没有gpu支持了。</p>
+<p>安装完成。</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2024 - 2025 星锡丅の后宅
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;星锡丅
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+</body>
+</html>

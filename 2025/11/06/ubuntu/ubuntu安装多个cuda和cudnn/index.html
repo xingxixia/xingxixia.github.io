@@ -1,0 +1,468 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>ubuntu安装多个cuda和cudnn | 星锡丅の后宅</title>
+    <meta name="author" content="星锡丅" />
+    <meta name="description" content="星锡丅的笔记和攻略" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/preview.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>星锡丅の后宅</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-主页 fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;星锡丅の后宅</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-主页 fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>ubuntu安装多个cuda和cudnn</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/11/6
+        </span>
+        
+        <span class="category">
+            <a href="/categories/ubuntu/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                ubuntu
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/ubuntu-cuda/" style="color: #00a596">
+                    ubuntu cuda
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <p>cuda本身就算直接安装也不会冲突，主要是cudnn<span id="more"></span></p>
+<p>资料来自于：</p>
+<p><a target="_blank" rel="noopener" href="https://gist.github.com/garg-aayush/156ec6ddda3d62e2c0ddad00b7e66956?utm_source=chatgpt.com">Managing multiple CUDA versions using environment modules in Ubuntu</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/opus/952516543885869090?spm_id_from=333.1007.0.0">多个CUDA版本自由切换方法 - 哔哩哔哩文章</a></p>
+<h1 id="1-安装cuda"><a href="#1-安装cuda" class="headerlink" title="1.安装cuda"></a><strong>1.安装cuda</strong></h1><p>第一个cuda可以和常规安装一样的，可以查看<a href="">ubuntu安装单cuda和cudnn</a>（这里到时候加上网址）</p>
+<p>这里先不要安装cudnn等会一起安装</p>
+<p>现在假设已经安装好了cuda13.0</p>
+<p>现在安装cuda12.5.1，这也是ubuntu24.04目前2025.11.16唯一可以拿来安装tensorflow的版本。</p>
+<pre><code>wget https://developer.download.nvidia.com/compute/cuda/12.5.1/local_installers/cuda_12.5.1_555.42.06_linux.run
+sudo sh cuda_12.5.1_555.42.06_linux.run
+</code></pre>
+<p>然后按照下面图片来选择</p>
+<img src="..\..\images\1.png" alt="cuda13.0官网1"  />
+
+<p><strong>这里除了CUDA Toolkit 意外全部去掉，然后进入Options</strong></p>
+<p><img src="/....%5Cimages%5C2.png" alt="cuda13.0官网1"></p>
+<p><strong>这里选择Tookit Options</strong></p>
+<p><img src="/....%5Cimages%5C3.png" alt="cuda13.0官网1"></p>
+<p>然后选择<strong>Change Toolkit Install Path</strong></p>
+<p><img src="/....%5Cimages%5C4.png" alt="cuda13.0官网1"></p>
+<p><strong>复制这段路径，注意开头不要有空格，然后按enter确认并退出</strong></p>
+<p><img src="/....%5Cimages%5C5.png" alt="cuda13.0官网1"></p>
+<p><strong>回到这个页面后去掉所有选项，然后选择Done</strong></p>
+<p><img src="/....%5Cimages%5C6.png" alt="cuda13.0官网1"></p>
+<p><strong>选择Library install path (Back for system defult)</strong></p>
+<p><img src="/....%5Cimages%5C7.png" alt="cuda13.0官网1"></p>
+<p><strong>粘贴刚才复制的路径然后按enter保存并退出</strong></p>
+<p><img src="/....%5Cimages%5C8.png" alt="cuda13.0官网1"></p>
+<p><strong>选择Done</strong></p>
+<p><img src="/....%5Cimages%5C9.png" alt="cuda13.0官网1"></p>
+<p><strong>然后选择Install就可以开始安装了</strong></p>
+<p>至此，安装上了第二个cuda，第三第四个也是这个方法</p>
+<h1 id="2-安装对应的cudnn"><a href="#2-安装对应的cudnn" class="headerlink" title="2.安装对应的cudnn"></a><strong>2.安装对应的cudnn</strong></h1><p>这里的cudnn全部使用压缩包安装，压缩包安装方法参考<a href="">ubuntu安装单cuda和cudnn</a>（这里到时候填入网址）</p>
+<p>这里再粘一遍吧。</p>
+<p>先去<a target="_blank" rel="noopener" href="https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/">Index of &#x2F;compute&#x2F;cudnn&#x2F;redist&#x2F;cudnn&#x2F;linux-x86_64</a>下载对用的版本</p>
+<p>这里下载9.3.0(cuda12.5)和9.16.0(cuda13.0)</p>
+<p>这里给出直接下载的网址，点击下载</p>
+<p><a target="_blank" rel="noopener" href="https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/cudnn-linux-x86_64-9.3.0.75_cuda12-archive.tar.xz">cudnn9.3.0.75 for cuda 12</a>和<a target="_blank" rel="noopener" href="https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/cudnn-linux-x86_64-9.16.0.29_cuda13-archive.tar.xz">cudnn9.16.0.29 for cuda 13</a></p>
+<p>然后1.解压并进入文件夹   2.在终端中打开</p>
+<p>或者也可以用指令</p>
+<pre><code>wegt https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/cudnn-linux-x86_64-9.3.0.75_cuda12-archive.tar.xz
+wegt https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/cudnn-linux-x86_64-9.16.0.29_cuda13-archive.tar.xz
+tar -xvf cudnn-linux-x86_64-9.3.0.75_cuda12-archive.tar.xz
+tar -xvf cudnn-linux-x86_64-9.16.0.29_cuda13-archive.tar.xz
+</code></pre>
+<p>然后进入文件夹在终端中打开（这里本想全部给指令，奈何我忘了解压出的文件夹的名字，不然是可以直接cd的）</p>
+<p>进入cudnn9.3.0然后执行</p>
+<pre><code>sudo cp lib/* /usr/local/cuda-12.5/lib64/ 
+sudo cp include/* /usr/local/cuda-12.5/include/
+</code></pre>
+<p>再进入另一个文件夹执行</p>
+<pre><code>sudo cp lib/* /usr/local/cuda-13.0/lib64/ 
+sudo cp include/* /usr/local/cuda-13.0/include/
+</code></pre>
+<p>至此，cuda和cudnn就安装好了</p>
+<h1 id="3-切换cuda"><a href="#3-切换cuda" class="headerlink" title="3.切换cuda"></a><strong>3.切换cuda</strong></h1><p>这里提供两种办法切换</p>
+<h2 id="一种是通过环境变量"><a href="#一种是通过环境变量" class="headerlink" title="一种是通过环境变量"></a>一种是通过环境变量</h2><p>在安装完第一个cuda后，~&#x2F;.bashrc里面应该有</p>
+<pre><code>echo &#39;export PATH=/usr/local/cuda-13.0/bin$&#123;PATH:+:$&#123;PATH&#125;&#125;&#39; | sudo tee -a /etc/profile.d/cuda.sh
+echo &#39;export LD_LIBRARY_PATH=/usr/local/cuda-13.0/lib64$&#123;LD_LIBRARY_PATH:+:$&#123;LD_LIBRARY_PATH&#125;&#125;&#39; | sudo tee -a /etc/profile.d/cuda.sh
+source /etc/profile.d/cuda.sh
+</code></pre>
+<p>第二个环境变量也可以加进去变成</p>
+<pre><code>#export PATH=/usr/local/cuda-12.5/bin$&#123;PATH:+:$&#123;PATH&#125;&#125; | sudo tee -a /etc/profile.d/cuda.sh
+#export LD_LIBRARY_PATH=/usr/local/cuda-12.5/lib64$&#123;LD_LIBRARY_PATH:+:$&#123;LD_LIBRARY_PATH&#125;&#125; | sudo tee -a #/etc/profile.d/cuda.sh
+#source /etc/profile.d/cuda.sh
+
+export PATH=/usr/local/cuda-13.0/bin$&#123;PATH:+:$&#123;PATH&#125;&#125; | sudo tee -a /etc/profile.d/cuda.sh
+export LD_LIBRARY_PATH=/usr/local/cuda-13.0/lib64$&#123;LD_LIBRARY_PATH:+:$&#123;LD_LIBRARY_PATH&#125;&#125; | sudo tee -a /etc/profile.d/cuda.sh
+source /etc/profile.d/cuda.sh
+</code></pre>
+<p>注意，这里最好注释掉其中一个，把当前不使用的全部注释掉</p>
+<h2 id="第二种是通过脚本"><a href="#第二种是通过脚本" class="headerlink" title="第二种是通过脚本"></a><strong>第二种是通过脚本</strong></h2><p>在home下新建一个switch-cuda.sh文件</p>
+<p>就是~&#x2F;switch-cuda.sh 这个路径</p>
+<p>里面添加如下内容：</p>
+<pre><code>#!/usr/bin/env bash
+
+	# Copyright (c) 2018 Patrick Hohenecker
+
+	#
+
+	# Permission is hereby granted, free of charge, to any person obtaining a copy
+
+	# of this software and associated documentation files (the &quot;Software&quot;), to deal
+
+	# in the Software without restriction, including without limitation the rights
+
+	# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+
+	# copies of the Software, and to permit persons to whom the Software is
+
+	# furnished to do so, subject to the following conditions:
+
+	#
+
+	# The above copyright notice and this permission notice shall be included in all
+
+	# copies or substantial portions of the Software.
+
+	#
+
+	# THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+
+	# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+
+	# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+
+	# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+
+	# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+
+	# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+
+	# SOFTWARE.
+
+	# author:  Patrick Hohenecker &lt;mail@paho.at&gt;
+
+	# version: 2018.1
+
+	# date:   May 15, 2018
+
+	set -e
+
+	# ensure that the script has been sourced rather than just executed
+
+	if [[ &quot;$&#123;BASH_SOURCE[0]&#125;&quot; = &quot;$&#123;0&#125;&quot; ]]; then
+
+	  echo &quot;Please use &#39;source&#39; to execute switch-cuda.sh!&quot;
+
+	  exit 1
+
+	fi
+
+	INSTALL_FOLDER=&quot;/usr/local&quot; # the location to look for CUDA installations at
+
+	TARGET_VERSION=$&#123;1&#125;     # the target CUDA version to switch to (if provided)
+
+	# if no version to switch to has been provided, then just print all available CUDA installations
+
+	if [[ -z $&#123;TARGET_VERSION&#125; ]]; then
+
+	  echo &quot;The following CUDA installations have been found (in &#39;$&#123;INSTALL_FOLDER&#125;&#39;):&quot;
+
+	  ls -l &quot;$&#123;INSTALL_FOLDER&#125;&quot; | egrep -o &quot;cuda-[0-9]+\\.[0-9]+$&quot; | while read -r line; do
+
+	    echo &quot;* $&#123;line&#125;&quot;
+
+	  done
+
+	  set +e
+
+	  return
+
+	# otherwise, check whether there is an installation of the requested CUDA version
+
+	elif [[ ! -d &quot;$&#123;INSTALL_FOLDER&#125;/cuda-$&#123;TARGET_VERSION&#125;&quot; ]]; then
+
+	  echo &quot;No installation of CUDA $&#123;TARGET_VERSION&#125; has been found!&quot;
+
+	  set +e
+
+	  return
+
+	fi
+
+	# the path of the installation to use
+
+	cuda_path=&quot;$&#123;INSTALL_FOLDER&#125;/cuda-$&#123;TARGET_VERSION&#125;&quot;
+
+	# filter out those CUDA entries from the PATH that are not needed anymore
+
+	path_elements=($&#123;PATH//:/ &#125;)
+
+	new_path=&quot;$&#123;cuda_path&#125;/bin&quot;
+
+	for p in &quot;$&#123;path_elements[@]&#125;&quot;; do
+
+	  if [[ ! $&#123;p&#125; =~ ^$&#123;INSTALL_FOLDER&#125;/cuda ]]; then
+
+	    new_path=&quot;$&#123;new_path&#125;:$&#123;p&#125;&quot;
+
+	  fi
+
+	done	
+
+	# filter out those CUDA entries from the LD_LIBRARY_PATH that are not needed anymore
+
+	ld_path_elements=($&#123;LD_LIBRARY_PATH//:/ &#125;)
+
+	new_ld_path=&quot;$&#123;cuda_path&#125;/lib64:$&#123;cuda_path&#125;/extras/CUPTI/lib64&quot;
+
+	for p in &quot;$&#123;ld_path_elements[@]&#125;&quot;; do
+
+	  if [[ ! $&#123;p&#125; =~ ^$&#123;INSTALL_FOLDER&#125;/cuda ]]; then
+
+	    new_ld_path=&quot;$&#123;new_ld_path&#125;:$&#123;p&#125;&quot;
+
+	  fi
+
+	done
+
+	# update environment variables
+
+	export CUDA_HOME=&quot;$&#123;cuda_path&#125;&quot;
+
+	export CUDA_ROOT=&quot;$&#123;cuda_path&#125;&quot;
+
+	export LD_LIBRARY_PATH=&quot;$&#123;new_ld_path&#125;&quot;
+
+	export PATH=&quot;$&#123;new_path&#125;&quot;
+
+	echo &quot;Switched to CUDA $&#123;TARGET_VERSION&#125;.&quot;
+
+	set +e
+
+	return
+</code></pre>
+<p>脚本使用方法：</p>
+<p>查看已经安装的cuda版本：</p>
+<p><code>source switch-cuda.sh</code></p>
+<p>切换到对应的版本(可在虚拟环境中使用)</p>
+<p><code>source switch-cuda.sh 12.5</code></p>
+<p>确认当前环境的cuda版本</p>
+<p><code>nvcc -V</code></p>
+<p>注意，cuda是要在环境变量里配置的，环境变量里是哪个cuda，新开的终端就是哪个cuda，本文件只对当前终端有效。</p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2024 - 2025 星锡丅の后宅
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;星锡丅
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+</body>
+</html>
