@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>1.机械原理概述 | 星锡丅の后宅</title>
+    <title>删除多系统下的ubuntu | 星锡丅の后宅</title>
     <meta name="author" content="星锡丅" />
     <meta name="description" content="星锡丅的笔记和攻略" />
     <meta name="keywords" content="" />
@@ -156,22 +156,22 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>1.机械原理概述</h1>
+        <h1>删除多系统下的ubuntu</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2024/9/29
+            2025/11/22
         </span>
         
         <span class="category">
-            <a href="/categories/Mechanisms-and-Machine-Theoy/">
+            <a href="/categories/ubuntu/">
                 <span class="icon">
                     <i class="fa-solid fa-bookmark fa-fw"></i>
                 </span>
-                Mechanisms and Machine Theoy
+                ubuntu
             </a>
         </span>
         
@@ -184,8 +184,8 @@
             
             <span class="tag">
                 
-                <a href="/tags/hardware/" style="color: #00a596">
-                    hardware
+                <a href="/tags/ubuntu-windows/" style="color: #ffa2c4">
+                    ubuntu windows
                 </a>
             </span>
             
@@ -194,7 +194,60 @@
     </div>
     
     <div class="content" v-pre>
-        <p>机械原理，这个不太懂哦，而且不好打出来，重点是上传自己的一些结构想法吧，学习的时候的一些奇思妙想。</p>
+        <p>win11，ubuntu22.04和ubuntu24.04<span id="more"></span></p>
+<p>我的ubuntu22.04只有93G，后面紧跟着24.04，没地方扩容了，打算换个地方，但是又忘了怎么删除efi分区，所以记录一下。</p>
+<p>我的ubuntu24.04efi分区和主分区都是单独的，删除的时候直接删除就行了，这个很好说，但是ubuntu22.04和win11的引导是在一起的，这就比较麻烦了，我们需要单独打开那块盘然后删除ubuntu的分区。</p>
+<p>引用：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1NRJCzPExo/?spm_id_from=333.337.search-card.all.click&amp;vd_source=166eb1254d246fb26e5f4aa3dc33f9ed">快速完全删除ubuntu，删除双系统_哔哩哔哩_bilibili</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV18b4y1D7wC/?spm_id_from=333.337.search-card.all.click&amp;vd_source=166eb1254d246fb26e5f4aa3dc33f9ed">双系统下完全卸载ubuntu_哔哩哔哩_bilibili</a></p>
+<p>总共有两部分需要删除，一部分是主分区，一部分是EFI分区，关于删除主分区，直接在磁盘管理里面右击然后删除卷就行，EFI分区比较麻烦，原因是它和windows是在一个分区里的，所以不能直接删除分区，所以接下来主要记录删除efi分区</p>
+<p>打开cmd，然后输入<code>list disk</code>，此时会列出所有硬盘及其信息</p>
+<p>找到安装ubuntu22.04efi文件的磁盘，我这里是磁盘1，所以再输入<code>select disk 1</code></p>
+<p>注：<code>select</code>也可以是<code>sel</code></p>
+<p>此时就已经选中了磁盘1，如果此时再次输入<code>list disk</code>的话会发现disk1的前面多了个*</p>
+<p>输入<code>list part</code>会列出硬盘1上所有的分区。找到efi分区，也就是系统分区，我这里是part1</p>
+<p>所以输入<code>sel part 1</code>，此时我们就选中了硬盘1下的分区1，也就是安装ubuntu22.02引导文件的地方</p>
+<p>输入<code>assign letter=Z</code>这里是分配盘符，其中z也可以是其他大写字母，但注意不要和现有的盘符重复了</p>
+<p>接下来的操作就有很多种了，</p>
+<p>由于安全原因，不能直接打开这个文件夹，因此我们需要用其他手段进去删掉ubuntu</p>
+<p><em>1 使用powershell</em></p>
+<p>使用管理员身份运行powershell，然后输入<code>cd Z:</code>这个Z是刚在分配的盘符，冒号别忘了。</p>
+<p>再输入<code>ls</code>可以看到里面有一个EFI文件夹，输入<code>cd .\EFI\</code>或<code>cd EFI</code>就能进入该文件夹。</p>
+<p>再次输入<code>ls</code>就可以看到里面有个ubuntu文件夹</p>
+<p>执行<code>rm .\ubuntu\</code>就能删除ubuntu的引导文件了。</p>
+<p><em>2 使用其他能打开文件的软件—-以记事本为例子</em></p>
+<p>虽然直接去点击是打不开的，但是如果有管理员权限就能打开，在搜索栏里面输入记事本，然后使用管理员身份打开</p>
+<p>此时我们的身份就是管理员了，选择文件—打开—z盘，你会惊喜的发现这样是可以进去的，点进去找到ubuntu文件夹删掉就好了</p>
+<p><em>3 简单粗暴的登录管理员账户</em></p>
+<p>题目就是方法</p>
+<p>最后别忘了关闭z</p>
+<p>在diskpart里面输入 <code>remove letter=Z</code></p>
+<p>总结一下：</p>
+<p>对于我现在的电脑，使用管理员身份运行cmd，输入</p>
+<pre><code>diskpart
+list disk
+select disk 1
+list part
+sel part 1
+assign letter=Z
+</code></pre><p>接下来有不同的办法</p>
+<ul>
+<li>运行powershell</li>
+</ul>
+<pre><code>cd Z:
+ls
+cd .\EFI\
+ls
+rm .\ubuntu\
+</code></pre><ul>
+<li>使用诸如记事本的软件</li>
+</ul>
+<p>搜索记事本，用管理员身份打开记事本</p>
+<p>然后文件—打开—选择z盘，你会发现是可以进去的，里面有个EFI文件夹，进去找到ubuntu文件夹删除就行了。</p>
+<ul>
+<li>简单粗暴的登录管理员账户**</li>
+</ul>
+<p>题目就是方法</p>
 
     </div>
     
