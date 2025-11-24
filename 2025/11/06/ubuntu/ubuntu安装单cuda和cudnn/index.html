@@ -184,7 +184,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/ubuntu-cuda/" style="color: #00bcd4">
+                <a href="/tags/ubuntu-cuda/" style="color: #00a596">
                     ubuntu cuda
                 </a>
             </span>
@@ -194,54 +194,54 @@
     </div>
     
     <div class="content" v-pre>
-        <p> 提供两种方案<span id="more"></span></p>
+        <p>提供两种方案<span id="more"></span></p>
 <p>ubuntu24.04安装单个cuda</p>
 <p>这里提供两种方法，一种是安装最新的，一种是安装特定版本</p>
 <p>以cuda13.0为例子，具体可以去官网查看</p>
 <p><a target="_blank" rel="noopener" href="https://developer.nvidia.com/cudnn-archive">cuDNN Archive</a>和<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-toolkit-archive">CUDA Toolkit Archive</a></p>
 <p>平时所说，安装cuda深度学习框架，实际上就是为了安装cuda toolkit和cudnn，cuda toolkit就是cuda。</p>
 <p>我们需要安装三个东西</p>
-<p>cuda driver —– cuda toolkit —– cudnn</p>
+<p>cuda driver ----- cuda toolkit ----- cudnn</p>
 <p>第一种，添加官方源并直接安装最新版</p>
 <p>资料引用：</p>
 <p>[[Ubuntu 24.04下CUDA 13.0开发环境搭建和测试]](<a target="_blank" rel="noopener" href="https://www.cnblogs.com/arnoldlu/p/19135120">Ubuntu 24.04下CUDA 13.0开发环境搭建和测试 - ArnoldLu - 博客园</a>)</p>
 <p>目前，24.04已经是最新的了，请确保这一点</p>
 <p>1.下载基础的编译工具和调试工具 <code>build-essential，dkms，wget，curl，git</code></p>
-<pre><code>sudo apt update
+<pre class="highlight"><code class="">sudo apt update
 sudo apt upgrade -y
 sudo apt install -y build-essential dkms wget curl git
 </code></pre>
 <p>2.卸载旧版本并重启，不然有概率报错</p>
-<pre><code>sudo apt remove --purge &#39;nvidia-*&#39; &#39;cuda-*&#39; &#39;libnvidia-*&#39; -y
+<pre class="highlight"><code class="">sudo apt remove --purge 'nvidia-*' 'cuda-*' 'libnvidia-*' -y
 sudo apt autoremove -y
 sudo apt autoclean
 sudo reboot
 </code></pre>
 <p>3.添加官方仓库源</p>
-<pre><code>wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
+<pre class="highlight"><code class="">wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
 sudo dpkg -i cuda-keyring_1.1-1_all.deb
 sudo apt update
 </code></pre>
 <p>4.安装cuda13.0和驱动</p>
-<pre><code>sudo apt install -y cuda
+<pre class="highlight"><code class="">sudo apt install -y cuda
 </code></pre>
 <p>5.配置环境变量</p>
-<pre><code>echo &#39;export PATH=/usr/local/cuda-13.0/bin$&#123;PATH:+:$&#123;PATH&#125;&#125;&#39; | sudo tee -a /etc/profile.d/cuda.sh
-echo &#39;export LD_LIBRARY_PATH=/usr/local/cuda-13.0/lib64$&#123;LD_LIBRARY_PATH:+:$&#123;LD_LIBRARY_PATH&#125;&#125;&#39; | sudo tee -a /etc/profile.d/cuda.sh
+<pre class="highlight"><code class="">echo 'export PATH=/usr/local/cuda-13.0/bin$&#123;PATH:+:$&#123;PATH&#125;&#125;' | sudo tee -a /etc/profile.d/cuda.sh
+echo 'export LD_LIBRARY_PATH=/usr/local/cuda-13.0/lib64$&#123;LD_LIBRARY_PATH:+:$&#123;LD_LIBRARY_PATH&#125;&#125;' | sudo tee -a /etc/profile.d/cuda.sh
 source /etc/profile.d/cuda.sh
 </code></pre>
 <p>6.重启</p>
-<pre><code class="language-sudo">sudo reboot
+<pre class="highlight"><code class="sudo">sudo reboot
 </code></pre>
 <p>7.验证驱动和cuda</p>
-<pre><code>nvidia-smi
+<pre class="highlight"><code class="">nvidia-smi
 nvcc --version
 </code></pre>
 <p>此时cuda就已经安装好了</p>
 <p>8.安装cudnn</p>
 <p>cudnn从9.12.0开始支持cuda13.x(我猜的，因为从9.12.0开始才出现关于cuda13.x的单独安装)，并且从11.1开始分full和jit版本</p>
 <p>这里我们安装cudnn9.16.0,full</p>
-<pre><code>wget https://developer.download.nvidia.com/compute/cudnn/9.16.0/local_installers/cudnn-local-repo-ubuntu2404-9.16.0_1.0-1_amd64.deb
+<pre class="highlight"><code class="">wget https://developer.download.nvidia.com/compute/cudnn/9.16.0/local_installers/cudnn-local-repo-ubuntu2404-9.16.0_1.0-1_amd64.deb
 sudo dpkg -i cudnn-local-repo-ubuntu2404-9.16.0_1.0-1_amd64.deb
 sudo cp /var/cudnn-local-repo-ubuntu2404-9.16.0/cudnn-*-keyring.gpg /usr/share/keyrings/
 sudo apt-get update
@@ -250,21 +250,21 @@ sudo apt-get -y install cudnn9-cuda-13
 <p>之后就安装好啦。</p>
 <p>第二种，利用官网手动安装特定版本</p>
 <p>1.安装编译软件，卸载驱动程序，和上面是差不多的，不过驱动是可选的，如果版本够的话就不用了</p>
-<pre><code>sudo apt update
+<pre class="highlight"><code class="">sudo apt update
 sudo apt upgrade -y
 sudo apt install -y build-essential dkms wget curl git
-sudo apt remove --purge &#39;nvidia-*&#39; &#39;cuda-*&#39; &#39;libnvidia-*&#39; -y
+sudo apt remove --purge 'nvidia-*' 'cuda-*' 'libnvidia-*' -y
 sudo apt autoremove -y
 sudo apt autoclean
 sudo reboot
 </code></pre>
 <p>2.安装指定驱动程序</p>
-<pre><code>sudo add-apt-repository ppa:graphics-drivers/ppa
+<pre class="highlight"><code class="">sudo add-apt-repository ppa:graphics-drivers/ppa
 sudo apt-get update
 sudo apt install nvidia-driver-580
 </code></pre>
 <p>或者是先搜索</p>
-<pre><code>sudo add-apt-repository ppa:graphics-drivers/ppa
+<pre class="highlight"><code class="">sudo add-apt-repository ppa:graphics-drivers/ppa
 ubuntu-drivers devices
 </code></pre>
 <p>然后再安装合适的</p>
@@ -275,13 +275,13 @@ ubuntu-drivers devices
 <p><code>nvidia-detector </code>或是<code>nvidia-smi</code></p>
 <p>4.安装cuda</p>
 <p>来到nvidia的cuda13.0官网<a target="_blank" rel="noopener" href="https://developer.nvidia.com/cuda-13-0-0-download-archive">CUDA Toolkit 13.0 Downloads</a></p>
-<p><img src="/....%5Cimages%5Ccuda13.0%E5%AE%98%E7%BD%91%E5%AE%89%E8%A3%851.png" alt="cuda13.0官网1"></p>
+<p><img src="....%5Cimages%5Ccuda13.0%E5%AE%98%E7%BD%91%E5%AE%89%E8%A3%851.png" alt="cuda13.0官网1" /></p>
 <p>按照次序点击Linux—X86_64—ubuntu—24.04</p>
 <p>可以选择runfie形式安装</p>
-<pre><code>wget https://developer.download.nvidia.com/compute/cuda/13.0.0/local_installers/cuda_13.0.0_580.65.06_linux.runsudo sh cuda_13.0.0_580.65.06_linux.run
+<pre class="highlight"><code class="">wget https://developer.download.nvidia.com/compute/cuda/13.0.0/local_installers/cuda_13.0.0_580.65.06_linux.runsudo sh cuda_13.0.0_580.65.06_linux.run
 </code></pre>
 <p>也可以是deb本地安装</p>
-<pre><code>wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-ubuntu2404.pin
+<pre class="highlight"><code class="">wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-ubuntu2404.pin
 sudo mv cuda-ubuntu2404.pin /etc/apt/preferences.d/cuda-repository-pin-600
 wget https://developer.download.nvidia.com/compute/cuda/13.0.0/local_installers/cuda-repo-ubuntu2404-13-0-local_13.0.0-580.65.06-1_amd64.deb
 sudo dpkg -i cuda-repo-ubuntu2404-13-0-local_13.0.0-580.65.06-1_amd64.deb
@@ -290,44 +290,44 @@ sudo apt-get update
 sudo apt-get -y install cuda-toolkit-13-0
 </code></pre>
 <p>又或者是deb网络安装</p>
-<pre><code>wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
+<pre class="highlight"><code class="">wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
 sudo dpkg -i cuda-keyring_1.1-1_all.deb
 sudo apt-get update
 sudo apt-get -y install cuda-toolkit-13-0
 </code></pre>
 <p>别忘了环境变量</p>
-<pre><code>echo &#39;export PATH=/usr/local/cuda-13.0/bin$&#123;PATH:+:$&#123;PATH&#125;&#125;&#39; | sudo tee -a /etc/profile.d/cuda.sh
-echo &#39;export LD_LIBRARY_PATH=/usr/local/cuda-13.0/lib64$&#123;LD_LIBRARY_PATH:+:$&#123;LD_LIBRARY_PATH&#125;&#125;&#39; | sudo tee -a /etc/profile.d/cuda.sh
+<pre class="highlight"><code class="">echo 'export PATH=/usr/local/cuda-13.0/bin$&#123;PATH:+:$&#123;PATH&#125;&#125;' | sudo tee -a /etc/profile.d/cuda.sh
+echo 'export LD_LIBRARY_PATH=/usr/local/cuda-13.0/lib64$&#123;LD_LIBRARY_PATH:+:$&#123;LD_LIBRARY_PATH&#125;&#125;' | sudo tee -a /etc/profile.d/cuda.sh
 source /etc/profile.d/cuda.sh
 </code></pre>
 <p>5.安装cudnn</p>
 <p>cudnn的安装可以用第一种或是deb网络安装</p>
-<pre><code>wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
+<pre class="highlight"><code class="">wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
 sudo dpkg -i cuda-keyring_1.1-1_all.deb
 sudo apt-get update
 sudo apt-get -y install cudnn
 </code></pre>
 <p>不过这里还有一种压缩包方式的安装</p>
-<p>首先在<a target="_blank" rel="noopener" href="https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/">Index of &#x2F;compute&#x2F;cudnn&#x2F;redist&#x2F;cudnn&#x2F;linux-x86_64</a>上查找并下载需要的版本的cudnn</p>
+<p>首先在<a target="_blank" rel="noopener" href="https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/">Index of /compute/cudnn/redist/cudnn/linux-x86_64</a>上查找并下载需要的版本的cudnn</p>
 <p>记得要看清楚支持的cuda版本</p>
-<p><img src="/....%5Cimages%5Ccudnn%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E9%80%89%E6%8B%A9.png"></p>
+<p><img src="http://tc.xingxixia.top/images/cudnn%E5%8E%8B%E7%BC%A9%E5%8C%85%E7%9A%84%E9%80%89%E6%8B%A9.png" alt="" /></p>
 <p>这里选择cudnn-linux-x86_64-9.16.0.29_cuda13-archive.tar.xz<a href="%5Bcudnn-linux-x86_64-9.16.0.29_cuda13-archive.tar.xz%5D(https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/cudnn-linux-x86_64-9.16.0.29_cuda13-archive.tar.xz)">下载</a>，现在是2025年11月16号，可以看到是前几天才发布的</p>
 <p>解压文件</p>
-<pre><code>tar -xvf cudnn-linux-x86_64-9.16.0.29_cuda13-archive.tar.xz
+<pre class="highlight"><code class="">tar -xvf cudnn-linux-x86_64-9.16.0.29_cuda13-archive.tar.xz
 </code></pre>
 <p>进入文件夹</p>
-<pre><code>cd cudnn-linux-x86_64-9.1.0.70_cuda11-archive/
+<pre class="highlight"><code class="">cd cudnn-linux-x86_64-9.1.0.70_cuda11-archive/
 </code></pre>
 <p>重点来了，现在复制文件</p>
-<pre><code>sudo cp lib/* /usr/local/cuda-13.0/lib64/ 
+<pre class="highlight"><code class="">sudo cp lib/* /usr/local/cuda-13.0/lib64/ 
 sudo cp include/* /usr/local/cuda-13.0/include/
 </code></pre>
 <p>注意，文件夹内应有lib和include这两个文件夹，但是也有可能是lib64</p>
 <p>如果是，那这里就是</p>
 <p><code>sudo cp lib64/* /usr/local/cuda-13.0/lib64/ </code></p>
-<p>并且这两句后面的cuda-13.0，要改到对应的版本，或者干脆去&#x2F;usr&#x2F;local&#x2F;下面也能找到对应的cuda文件夹</p>
+<p>并且这两句后面的cuda-13.0，要改到对应的版本，或者干脆去/usr/local/下面也能找到对应的cuda文件夹</p>
 <p>我也有看到说是</p>
-<pre><code>sudo cp include/cudnn*.h /usr/local/cuda-11.8/include
+<pre class="highlight"><code class="">sudo cp include/cudnn*.h /usr/local/cuda-11.8/include
 sudo cp lib/libcudnn* /usr/local/cuda-11.8/lib64
 </code></pre>
 <p>的，不顾我用的是前者，这一种我还没用过</p>

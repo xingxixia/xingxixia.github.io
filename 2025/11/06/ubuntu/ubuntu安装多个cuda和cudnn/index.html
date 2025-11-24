@@ -184,7 +184,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/ubuntu-cuda/" style="color: #00bcd4">
+                <a href="/tags/ubuntu-cuda/" style="color: #03a9f4">
                     ubuntu cuda
                 </a>
             </span>
@@ -198,65 +198,68 @@
 <p>资料来自于：</p>
 <p><a target="_blank" rel="noopener" href="https://gist.github.com/garg-aayush/156ec6ddda3d62e2c0ddad00b7e66956?utm_source=chatgpt.com">Managing multiple CUDA versions using environment modules in Ubuntu</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/opus/952516543885869090?spm_id_from=333.1007.0.0">多个CUDA版本自由切换方法 - 哔哩哔哩文章</a></p>
-<h1 id="1-安装cuda"><a href="#1-安装cuda" class="headerlink" title="1.安装cuda"></a><strong>1.安装cuda</strong></h1><p>第一个cuda可以和常规安装一样的，可以查看<a href="">ubuntu安装单cuda和cudnn</a>（这里到时候加上网址）</p>
+<h1 id="1安装cuda"><a class="markdownIt-Anchor" href="#1安装cuda"></a> <strong>1.安装cuda</strong></h1>
+<p>第一个cuda可以和常规安装一样的，可以查看<a href="">ubuntu安装单cuda和cudnn</a>（这里到时候加上网址）</p>
 <p>这里先不要安装cudnn等会一起安装</p>
 <p>现在假设已经安装好了cuda13.0</p>
 <p>现在安装cuda12.5.1，这也是ubuntu24.04目前2025.11.16唯一可以拿来安装tensorflow的版本。</p>
-<pre><code>wget https://developer.download.nvidia.com/compute/cuda/12.5.1/local_installers/cuda_12.5.1_555.42.06_linux.run
+<pre class="highlight"><code class="">wget https://developer.download.nvidia.com/compute/cuda/12.5.1/local_installers/cuda_12.5.1_555.42.06_linux.run
 sudo sh cuda_12.5.1_555.42.06_linux.run
 </code></pre>
 <p>然后按照下面图片来选择</p>
-<img src="..\..\images\1.png" alt="cuda13.0官网1"  />
-
+<p><img src="http://tc.xingxixia.top/images/cuda_install_1.png" alt="" /></p>
 <p><strong>这里除了CUDA Toolkit 意外全部去掉，然后进入Options</strong></p>
-<p><img src="/....%5Cimages%5C2.png" alt="cuda13.0官网1"></p>
+<p><img src="http://tc.xingxixia.top/images/cuda_install_2.png" alt="" /></p>
 <p><strong>这里选择Tookit Options</strong></p>
-<p><img src="/....%5Cimages%5C3.png" alt="cuda13.0官网1"></p>
+<p><img src="http://tc.xingxixia.top/images/cuda_install_3.png" alt="" /></p>
 <p>然后选择<strong>Change Toolkit Install Path</strong></p>
-<p><img src="/....%5Cimages%5C4.png" alt="cuda13.0官网1"></p>
+<p><img src="http://tc.xingxixia.top/images/cuda_install_4.png" alt="" /></p>
 <p><strong>复制这段路径，注意开头不要有空格，然后按enter确认并退出</strong></p>
-<p><img src="/....%5Cimages%5C5.png" alt="cuda13.0官网1"></p>
+<p><img src="http://tc.xingxixia.top/images/cuda_install_5.png" alt="" /></p>
 <p><strong>回到这个页面后去掉所有选项，然后选择Done</strong></p>
-<p><img src="/....%5Cimages%5C6.png" alt="cuda13.0官网1"></p>
+<p><img src="http://tc.xingxixia.top/images/cuda_install_6.png" alt="" /></p>
 <p><strong>选择Library install path (Back for system defult)</strong></p>
-<p><img src="/....%5Cimages%5C7.png" alt="cuda13.0官网1"></p>
+<p><img src="http://tc.xingxixia.top/images/cuda_install_7.png" alt="" /></p>
 <p><strong>粘贴刚才复制的路径然后按enter保存并退出</strong></p>
-<p><img src="/....%5Cimages%5C8.png" alt="cuda13.0官网1"></p>
+<p><img src="http://tc.xingxixia.top/images/cuda_install_8.png" alt="" /></p>
 <p><strong>选择Done</strong></p>
-<p><img src="/....%5Cimages%5C9.png" alt="cuda13.0官网1"></p>
+<p><img src="http://tc.xingxixia.top/images/cuda_install_9.png" alt="" /></p>
 <p><strong>然后选择Install就可以开始安装了</strong></p>
 <p>至此，安装上了第二个cuda，第三第四个也是这个方法</p>
-<h1 id="2-安装对应的cudnn"><a href="#2-安装对应的cudnn" class="headerlink" title="2.安装对应的cudnn"></a><strong>2.安装对应的cudnn</strong></h1><p>这里的cudnn全部使用压缩包安装，压缩包安装方法参考<a href="">ubuntu安装单cuda和cudnn</a>（这里到时候填入网址）</p>
+<h1 id="2安装对应的cudnn"><a class="markdownIt-Anchor" href="#2安装对应的cudnn"></a> <strong>2.安装对应的cudnn</strong></h1>
+<p>这里的cudnn全部使用压缩包安装，压缩包安装方法参考<a href="https://xingxixia.github.io/2025/11/06/ubuntu/ubuntu%E5%AE%89%E8%A3%85%E5%8D%95cuda%E5%92%8Ccudnn/">ubuntu安装单cuda和cudnn</a></p>
 <p>这里再粘一遍吧。</p>
-<p>先去<a target="_blank" rel="noopener" href="https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/">Index of &#x2F;compute&#x2F;cudnn&#x2F;redist&#x2F;cudnn&#x2F;linux-x86_64</a>下载对用的版本</p>
+<p>先去<a target="_blank" rel="noopener" href="https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/">Index of /compute/cudnn/redist/cudnn/linux-x86_64</a>下载对用的版本</p>
 <p>这里下载9.3.0(cuda12.5)和9.16.0(cuda13.0)</p>
 <p>这里给出直接下载的网址，点击下载</p>
 <p><a target="_blank" rel="noopener" href="https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/cudnn-linux-x86_64-9.3.0.75_cuda12-archive.tar.xz">cudnn9.3.0.75 for cuda 12</a>和<a target="_blank" rel="noopener" href="https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/cudnn-linux-x86_64-9.16.0.29_cuda13-archive.tar.xz">cudnn9.16.0.29 for cuda 13</a></p>
 <p>然后1.解压并进入文件夹   2.在终端中打开</p>
 <p>或者也可以用指令</p>
-<pre><code>wegt https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/cudnn-linux-x86_64-9.3.0.75_cuda12-archive.tar.xz
+<pre class="highlight"><code class="">wegt https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/cudnn-linux-x86_64-9.3.0.75_cuda12-archive.tar.xz
 wegt https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/cudnn-linux-x86_64-9.16.0.29_cuda13-archive.tar.xz
 tar -xvf cudnn-linux-x86_64-9.3.0.75_cuda12-archive.tar.xz
 tar -xvf cudnn-linux-x86_64-9.16.0.29_cuda13-archive.tar.xz
 </code></pre>
 <p>然后进入文件夹在终端中打开（这里本想全部给指令，奈何我忘了解压出的文件夹的名字，不然是可以直接cd的）</p>
 <p>进入cudnn9.3.0然后执行</p>
-<pre><code>sudo cp lib/* /usr/local/cuda-12.5/lib64/ 
+<pre class="highlight"><code class="">sudo cp lib/* /usr/local/cuda-12.5/lib64/ 
 sudo cp include/* /usr/local/cuda-12.5/include/
 </code></pre>
 <p>再进入另一个文件夹执行</p>
-<pre><code>sudo cp lib/* /usr/local/cuda-13.0/lib64/ 
+<pre class="highlight"><code class="">sudo cp lib/* /usr/local/cuda-13.0/lib64/ 
 sudo cp include/* /usr/local/cuda-13.0/include/
 </code></pre>
 <p>至此，cuda和cudnn就安装好了</p>
-<h1 id="3-切换cuda"><a href="#3-切换cuda" class="headerlink" title="3.切换cuda"></a><strong>3.切换cuda</strong></h1><p>这里提供两种办法切换</p>
-<h2 id="一种是通过环境变量"><a href="#一种是通过环境变量" class="headerlink" title="一种是通过环境变量"></a>一种是通过环境变量</h2><p>在安装完第一个cuda后，~&#x2F;.bashrc里面应该有</p>
-<pre><code>echo &#39;export PATH=/usr/local/cuda-13.0/bin$&#123;PATH:+:$&#123;PATH&#125;&#125;&#39; | sudo tee -a /etc/profile.d/cuda.sh
-echo &#39;export LD_LIBRARY_PATH=/usr/local/cuda-13.0/lib64$&#123;LD_LIBRARY_PATH:+:$&#123;LD_LIBRARY_PATH&#125;&#125;&#39; | sudo tee -a /etc/profile.d/cuda.sh
+<h1 id="3切换cuda"><a class="markdownIt-Anchor" href="#3切换cuda"></a> <strong>3.切换cuda</strong></h1>
+<p>这里提供两种办法切换</p>
+<h2 id="一种是通过环境变量"><a class="markdownIt-Anchor" href="#一种是通过环境变量"></a> 一种是通过环境变量</h2>
+<p>在安装完第一个cuda后，~/.bashrc里面应该有</p>
+<pre class="highlight"><code class="">echo 'export PATH=/usr/local/cuda-13.0/bin$&#123;PATH:+:$&#123;PATH&#125;&#125;' | sudo tee -a /etc/profile.d/cuda.sh
+echo 'export LD_LIBRARY_PATH=/usr/local/cuda-13.0/lib64$&#123;LD_LIBRARY_PATH:+:$&#123;LD_LIBRARY_PATH&#125;&#125;' | sudo tee -a /etc/profile.d/cuda.sh
 source /etc/profile.d/cuda.sh
 </code></pre>
 <p>第二个环境变量也可以加进去变成</p>
-<pre><code>#export PATH=/usr/local/cuda-12.5/bin$&#123;PATH:+:$&#123;PATH&#125;&#125; | sudo tee -a /etc/profile.d/cuda.sh
+<pre class="highlight"><code class="">#export PATH=/usr/local/cuda-12.5/bin$&#123;PATH:+:$&#123;PATH&#125;&#125; | sudo tee -a /etc/profile.d/cuda.sh
 #export LD_LIBRARY_PATH=/usr/local/cuda-12.5/lib64$&#123;LD_LIBRARY_PATH:+:$&#123;LD_LIBRARY_PATH&#125;&#125; | sudo tee -a #/etc/profile.d/cuda.sh
 #source /etc/profile.d/cuda.sh
 
@@ -265,10 +268,11 @@ export LD_LIBRARY_PATH=/usr/local/cuda-13.0/lib64$&#123;LD_LIBRARY_PATH:+:$&#123
 source /etc/profile.d/cuda.sh
 </code></pre>
 <p>注意，这里最好注释掉其中一个，把当前不使用的全部注释掉</p>
-<h2 id="第二种是通过脚本"><a href="#第二种是通过脚本" class="headerlink" title="第二种是通过脚本"></a><strong>第二种是通过脚本</strong></h2><p>在home下新建一个switch-cuda.sh文件</p>
-<p>就是~&#x2F;switch-cuda.sh 这个路径</p>
+<h2 id="第二种是通过脚本"><a class="markdownIt-Anchor" href="#第二种是通过脚本"></a> <strong>第二种是通过脚本</strong></h2>
+<p>在home下新建一个switch-cuda.sh文件</p>
+<p>就是~/switch-cuda.sh 这个路径</p>
 <p>里面添加如下内容：</p>
-<pre><code>#!/usr/bin/env bash
+<pre class="highlight"><code class="">#!/usr/bin/env bash
 
 	# Copyright (c) 2018 Patrick Hohenecker
 
@@ -320,7 +324,7 @@ source /etc/profile.d/cuda.sh
 
 	if [[ &quot;$&#123;BASH_SOURCE[0]&#125;&quot; = &quot;$&#123;0&#125;&quot; ]]; then
 
-	  echo &quot;Please use &#39;source&#39; to execute switch-cuda.sh!&quot;
+	  echo &quot;Please use 'source' to execute switch-cuda.sh!&quot;
 
 	  exit 1
 
@@ -334,7 +338,7 @@ source /etc/profile.d/cuda.sh
 
 	if [[ -z $&#123;TARGET_VERSION&#125; ]]; then
 
-	  echo &quot;The following CUDA installations have been found (in &#39;$&#123;INSTALL_FOLDER&#125;&#39;):&quot;
+	  echo &quot;The following CUDA installations have been found (in '$&#123;INSTALL_FOLDER&#125;'):&quot;
 
 	  ls -l &quot;$&#123;INSTALL_FOLDER&#125;&quot; | egrep -o &quot;cuda-[0-9]+\\.[0-9]+$&quot; | while read -r line; do
 
@@ -409,6 +413,7 @@ source /etc/profile.d/cuda.sh
 	set +e
 
 	return
+
 </code></pre>
 <p>脚本使用方法：</p>
 <p>查看已经安装的cuda版本：</p>
