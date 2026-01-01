@@ -166,11 +166,66 @@
             2025/12/25
         </span>
         
+        <span class="category">
+            <a href="/categories/DeepLearning/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                DeepLearning
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/DeepLearning/" style="color: #ff7d73">
+                    DeepLearning
+                </a>
+            </span>
+            
+        </span>
         
     </div>
     
     <div class="content" v-pre>
         <p>最近在调Atri_2，找到了一篇文章，但是感觉不是很满意，所以专门看一看论文，做一下笔记，调Atri。<span id="more"></span></p>
+<h1 id="目的"><a class="markdownIt-Anchor" href="#目的"></a> 目的</h1>
+<p>随着技术发展，大模型的参数量飞速增长，全量调参变得极为困难，因此需要减轻调参的负担。</p>
+<p>根据Aghajanyan等人的理论，过度参数化的模型内在维度较低，根据这个可以设计一个高效调参的方法。</p>
+<p><img src="http://tc.xingxixia.top/images/Atri_Project/Atri2/LoRA_structure.png" alt="Lora_structure" /></p>
+<p>LoRA的几个关键优势：</p>
+<ul>
+<li>一个预先训练好的模型可以被共享，并用于为不同的任务建立许多小的LoRA模块 。我们可以冻结共享模型，并通过替换上图中的矩阵A和B来有效地切换任务，从而大大降低存储需求和任务切换的难度。</li>
+<li>LoRA使训练更加有效，在使用自适应优化器时，硬件门槛降低了3倍，因为我们不需要计算梯度或维护大多数参数的优化器状态。相反，我们只优化注入的、小得多的低秩矩阵。</li>
+<li>我们简单的线性设计允许我们在部署时将可训练矩阵与冻结权重合并，与完全微调的模型相比，在结构上没有引入推理延迟。</li>
+<li>LoRA与许多先前的方法是正交的，并且可以与许多方法相结合，例如前缀调整。 我们在附录E中提供了一个例子。</li>
+</ul>
+<h1 id="基本原理公式"><a class="markdownIt-Anchor" href="#基本原理公式"></a> 基本原理公式：</h1>
+<p>全量训练：</p>
+<p><img src="http://tc.xingxixia.top/images/Atri_Project/Atri2/full_fine-tuning.png" alt="full_fine-tuning" /></p>
+<p>LoRA微调：</p>
+<p><img src="http://tc.xingxixia.top/images/Atri_Project/Atri2/LoRA_tuning_function.png" alt="LoRA_tuning_function" /></p>
+<p>其他的也有很多方法，比如prefix或者是adapter，但是有的会减少可用上下文长度或者是延长推理时间，还有一些其他的东西，并且，他们的性能一般是低于全量调参的效果的。</p>
+<p>对于调整的每一层，可用这个公式表示：<img src="data:image/png;base64,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" alt="img" />，其中<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAmCAMAAACS/WnbAAAAAXNSR0IArs4c6QAAAFdQTFRFAAAAAAAAAAA6AABmADpmADqQAGa2OgAAOgA6OgBmOjoAOpDbZgAAZjoAZrb/kDoAkJA6kNv/tmYAtmY6trZmtv//25A625Bm2////7Zm/9uQ//+2///b37rg5AAAAAF0Uk5TAEDm2GYAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAZdEVYdFNvZnR3YXJlAE1pY3Jvc29mdCBPZmZpY2V/7TVxAAAAwElEQVQ4T+1QURaCMAzbQJ0Igk6pMrj/OW3Sziv4fI/+pNA0zRLCXnsCf5lAbu7wvT1iZJfbOYSSYjy++Z51iL03nJcEQnjVeZDD1ajbxEmOhMV08XsUv0FC6W6AbTJZZbZzSSe2PJ57AYgbwI+qTULpZhDWYXSBctZTEvkJgvJByKapJej8hhJUAASu+dOw6/51ogIgANyiebEb0j7pz4BVH2M3pLlgU6E6ZKBWXLWI5Jsh+lrIarHMPbfq4tf4AUVxC5TEWbQbAAAAAElFTkSuQmCC" alt="img" />就是W的更新量，是和W相同形状的一个矩阵，其内容同W高度相关，可以说是W只在部分方向上更新。除此之外还可以加一个<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAmCAMAAACS/WnbAAAAAXNSR0IArs4c6QAAAGNQTFRFAAAAAAAAAAA6AABmADpmADqQAGa2OgAAOmZmOmaQOma2OpDbZgAAZjoAZmaQZra2ZrbbZrb/kDoAkGY6kNv/tmYAtmY6tpBmttv/tv//25A62////7Zm/9uQ/9u2//+2///bDPPrGAAAAAF0Uk5TAEDm2GYAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAZdEVYdFNvZnR3YXJlAE1pY3Jvc29mdCBPZmZpY2V/7TVxAAAAwElEQVQ4T+2R3RKCIBCF2fyhkjRRi1ZR3v8pQ1hoshm8bkaudg7Lnm8PjB3nSOAPEsDslaQ0skxvMZ36dMNQjMmGRVSb+7kDuDLNSXeI5slPvekgs72al6OR7UDoHhHvmje1woKxRayWeOatHzyBLzTP/bLoBISwWkD0ujWTbnQwsAMJJSjewXIQOVIIiyDFNRgJ9C6mGJeyFmruGlHN9RqP3rJa6Qa5Yg+4qNUkssTiO7TfFDeh7v3T7kdHxM/gN8I2Cx6sQQAdAAAAAElFTkSuQmCC" alt="img" />的量，其中r是为了调整尺度，<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAmCAMAAAAoXuG7AAAAAXNSR0IArs4c6QAAAFRQTFRFAAAAAAAAAABmADpmADqQAGa2OgAAOmZmOmaQOma2OpDbZgAAZjoAZmaQZra2Zrb/kDoAkGY6tmYAtmY6ttv/tv//25A62////9uQ/9u2//+2///bPrXdEwAAAAF0Uk5TAEDm2GYAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAZdEVYdFNvZnR3YXJlAE1pY3Jvc29mdCBPZmZpY2V/7TVxAAAAZElEQVQoU+2QWxKAIAhFodJKK7XMR+5/nwm2gmb6ix+G4dzLA+CPbz+QHeIMSSoak6SIxZq9O2tx6SEChFEaagWkFFBQUSwTjXvAquVNWVYssiGRPrtNq7xWM0gL9h4OnPz7q27oeQQqnTqlCAAAAABJRU5ErkJggg==" alt="img" />可以看作学习率。微调时只需要调整BA而不需要调整<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAmCAMAAAAGG8ApAAAAAXNSR0IArs4c6QAAAF1QTFRFAAAAAAAAAAA6AABmADqQAGa2OgAAOgA6OgBmOjoAOmaQOma2OpDbZgAAZrb/kDoAkJA6kNv/tmYAtmY6trZmttv/tv//25A625Bm2////7Zm/9uQ/9u2//+2///bHVe9iwAAAAF0Uk5TAEDm2GYAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAZdEVYdFNvZnR3YXJlAE1pY3Jvc29mdCBPZmZpY2V/7TVxAAAAvklEQVQ4T+1RSxaCMAxMqCIqtVqFKJXe/5jmw68bT0A2814m6cykAHvtF/h7gfxErB48El0PkGrEw2daGL0SqRYG3isBOWgrosKgY1bGpOYukEO70VaB2JIALSIyIExqemFGf9vaFSa2IEw8FjmY4RVh0mmVlxFu8coMbLzGi0Ui91JxAxhc9/X2KlVnscog8upbfTJYRrL0o2dmyjugpiNLr8a3l1jc2o69VlYOrF6eYh4g15XXWzblw67s5Qd2YAs5zgLIugAAAABJRU5ErkJggg==" alt="img" />这样可以大大减少训练量，在推理时，BA通道和<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAmCAMAAAAGG8ApAAAAAXNSR0IArs4c6QAAAF1QTFRFAAAAAAAAAAA6AABmADqQAGa2OgAAOgA6OgBmOjoAOmaQOma2OpDbZgAAZrb/kDoAkJA6kNv/tmYAtmY6trZmttv/tv//25A625Bm2////7Zm/9uQ/9u2//+2///bHVe9iwAAAAF0Uk5TAEDm2GYAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAZdEVYdFNvZnR3YXJlAE1pY3Jvc29mdCBPZmZpY2V/7TVxAAAAvklEQVQ4T+1RSxaCMAxMqCIqtVqFKJXe/5jmw68bT0A2814m6cykAHvtF/h7gfxErB48El0PkGrEw2daGL0SqRYG3isBOWgrosKgY1bGpOYukEO70VaB2JIALSIyIExqemFGf9vaFSa2IEw8FjmY4RVh0mmVlxFu8coMbLzGi0Ui91JxAxhc9/X2KlVnscog8upbfTJYRrL0o2dmyjugpiNLr8a3l1jc2o69VlYOrF6eYh4g15XXWzblw67s5Qd2YAs5zgLIugAAAABJRU5ErkJggg==" alt="img" />通道是并行的，因此代价只有扩大了一点点显存占用，不会增加推理时间。</p>
+<h1 id="transformer里的应用"><a class="markdownIt-Anchor" href="#transformer里的应用"></a> Transformer里的应用</h1>
+<p>研究发现，更新<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHkAAAApCAMAAAAmqnaMAAAAAXNSR0IArs4c6QAAAJBQTFRFAAAAAAAAAAA6AABmADo6ADpmADqQAGa2OgAAOgA6OgBmOjoAOjo6OjqQOpC2OpDbZgAAZgA6ZjoAZjo6ZpC2ZpDbZrbbZrb/kDoAkDo6kJA6kJC2kNv/tmYAtmY6tmZmtpA6trZmttu2ttvbttv/tv//25A625Bm27aQ2//b2////7Zm/9uQ/9u2//+2///bkLYF2wAAAAF0Uk5TAEDm2GYAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAZdEVYdFNvZnR3YXJlAE1pY3Jvc29mdCBPZmZpY2V/7TVxAAAB2klEQVRYR+1V21LCMBBNWpGCl9YrRQ0qQkQa2v//O3e3QdI0IUNneDJ5yQxnc87u6e7CWDzRgehAdCA6EB2IDkQHogP/zIFmwXnyBkWLdM2Yyji/3JoWhHAWCvDjdUHCKkNl9m0JMxbCgwFegqYkScHpqiiNTtEBnA0maB+q6QteTZnb3RbCtfIQAvrAIpd4ye5HpixCeDDAS4CAmq5RuS5m/QEL4aQ8iAAfipyhshg7JjuEk/IgAngIGaOymtjtpd0+iqPyMAKQhIxRGa/+sXA9fkbciQSHlzL9pOZqL5dyF+914akEfxIyucJa4aL22t3z5Nos3sKxGfTwa4pOAKysGVvwZ9MTS+CBJ08Ey3aHyHZ71cXtVmWQA81CH4fxnbFqgsz7iA7B5qvMdysJqXsIVAYCbUNVnCqU7fYSoI/9cnjYxRm82jzSat9TdwNoMoWZuiUA8+OaXvqNviSm4DqV/ofxRWA96sZLQAJkqnXwXVN60qJYMa4LMsm5dsDCdN3MwT4PTEbTvrQOxDfv2GrS7BEjCDe7uPx59UZU6XKOFXkIMO2No2TGPvhoeedaKFq9BlBlI+f8UUjFRyvnZ9I/Vhm/8FSFfh17ekbM9Yd1RjmDWrRjdubzC6qAR6j18thSAAAAAElFTkSuQmCC" alt="img" />的效率是最高的，即在相同参数预算下能够带来更显著的性能提升，其他层在低秩受限条件下，边际收益较低。并且，每个层都更新一点好过只更新部分层，其中调整<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAApCAMAAABX0hoSAAAAAXNSR0IArs4c6QAAAH5QTFRFAAAAAAAAAAA6AABmADpmADqQAGa2OgAAOgA6OgBmOjoAOjo6OjqQOpC2OpDbZgAAZgA6ZjoAZrbbZrb/kDoAkDo6kJA6kNv/tmYAtmY6tmZmtpA6trZmttu2ttvbttv/tv//25A625Bm27aQ2////7Zm/9uQ/9u2//+2///bJwQNYAAAAAF0Uk5TAEDm2GYAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAAZdEVYdFNvZnR3YXJlAE1pY3Jvc29mdCBPZmZpY2V/7TVxAAABK0lEQVRIS+2T3U7DMAyF7XbQjZ8Wtg4yYKyBNWve/wWxnUmsjT1xi9TcWMrXYzvHLsB8ZgdmB2YH/oMDcYdYvFKnruwAQoV4c7zs2+ZDI7pQsRC+JjoAk8dWFA4l9JJlVNLiSRhWLxxiW0/9tbk8ztWegx8/UJKYnEFYdSwcmk0+UJMzcDWw0N0qi2ByAlSQhWE5debcqs5JQQVZyCE/Jvflh/iSgiY0uC/uuBIFceb0jMX9ZekRp0XawA7X/KVPo/dpZ4bm8RgqSiFTyPj3Z1ufDl4S9yjBp51xJGcvfoVjLhNz+dTkXtaAMyiHnQ8POeL72NI41V3g/soubpWp0ffxjV3y8v789OV+q6wXwDsu9k/aHpxz9Lg46CmlGwtdv9d+kT9lcmk+188PAOke09eDBAMAAAAASUVORK5CYII=" alt="img" />的收益较高。</p>
+<p><img src="http://tc.xingxixia.top/images/Atri_Project/Atri2/LoRA_transformer%E5%BA%94%E7%94%A81.png" alt="LoRA_transformer应用1" /></p>
+<h1 id="r的影响"><a class="markdownIt-Anchor" href="#r的影响"></a> r的影响</h1>
+<p><img src="http://tc.xingxixia.top/images/Atri_Project/Atri2/LoRA_r%E7%9A%84%E5%BD%B1%E5%93%8D.png" alt="LoRA_r的影响" /></p>
+<h3 id="询问ai可以得到"><a class="markdownIt-Anchor" href="#询问ai可以得到"></a> 询问ai可以得到：</h3>
+<p>LoRA 的秩 r 决定了权重更新可探索的低维子空间大小。在预训练 Transformer 上，下游任务往往具有较低的内在维度，因此较小的 r 即可实现有效适配，继续增大 r 的收益有限且可能破坏模型的泛化能力。</p>
+<h3 id="如何设置r"><a class="markdownIt-Anchor" href="#如何设置r"></a> 如何设置r</h3>
+<p>LoRA 的秩 r 本质上控制的是“可学习更新子空间的维度”。在大多数 Transformer 微调任务中，r 取 4–16 即可达到接近全参数微调的效果；继续增大 r 的边际收益迅速递减。</p>
+<p><img src="http://tc.xingxixia.top/images/Atri_Project/Atri2/LoRA_%E8%AE%BE%E7%BD%AEr.png" alt="LoRA_设置r" /></p>
+<h1 id="结论"><a class="markdownIt-Anchor" href="#结论"></a> 结论</h1>
+<p>微调巨大的语言模型在所需的硬件和为不同任务托管独立实例的存储/切换成本方面是非常昂贵的。我们提出了LoRA，一种高效的适应策略，既不引入推理延迟，也不减少输入序列的长度，同时保留了高的模型质量。重要的是，它允许在作为服务部署时通过共享绝大多数的模型参数来实现快速的任务切换。虽然我们专注于Transformer语言模型，但提出的原则一般适用于任何具有密集层的神经网络。</p>
+<p>使用这个办法调整了atri，代码在<a target="_blank" rel="noopener" href="https://github.com/xingxixia/Atri_Project_2">Atri_Project_2</a>。</p>
 
     </div>
     
@@ -186,7 +241,7 @@
     <div id="footer-wrap">
         <div>
             &copy;
-            2024 - 2025 星锡丅の后宅
+            2024 - 2026 星锡丅の后宅
             <span id="footer-icon">
                 <i class="fa-solid fa-font-awesome fa-fw"></i>
             </span>
